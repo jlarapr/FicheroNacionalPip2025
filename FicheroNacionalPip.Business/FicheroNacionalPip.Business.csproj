@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Version>0.0.1</Version>
+        <AssemblyVersion>0.0.1</AssemblyVersion>
+        <FileVersion>2025.04.01</FileVersion>
+        <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <SelfContained>false</SelfContained> <!-- Publicación dependiente del framework -->
+        <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+        <DebugType>None</DebugType>
+        <DebugSymbols>false</DebugSymbols>
+    </PropertyGroup>
+    
+    <ItemGroup>
+      <Folder Include="Interfaces\" />
+      <Folder Include="Services\" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\FicheroNacionalPip.Data\FicheroNacionalPip.Data.csproj" />
+    </ItemGroup>
+
+</Project>
