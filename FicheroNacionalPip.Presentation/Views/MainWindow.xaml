@@ -1,9 +1,6 @@
 ﻿<Window x:Class="FicheroNacionalPip.Presentation.Views.MainWindow"
         x:Name="MyMainWin"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-
-
-
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -35,14 +32,14 @@
         </EventTrigger>
     </Window.Triggers>
 
-    <Grid Background="White">
-        <Grid x:Name="GridMain" Margin="123,100,52.889,57.556" Background="White">
+    <Grid Background="Transparent">
+        <Grid x:Name="GridMain" Margin="123,90,52.889,57.556" Background="White">
             <DockPanel>
                 <ContentControl Foreground="White" Content="{Binding CurrentView}" DockPanel.Dock="Bottom" />
             </DockPanel>
         </Grid>
         <Grid Height="60" VerticalAlignment="Top" x:Name="GridBackground_H1" Background="Green">
-            <Grid.Effect>
+            <Grid.Effect >
                 <DropShadowEffect BlurRadius="1" ShadowDepth="1" Color="#FFACACAC" />
             </Grid.Effect>
 
@@ -55,40 +52,41 @@
             </TextBlock>
 
             <!-- Menú Derecho y UserName -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,10,0">
-                <TextBlock x:Name="TxtUserName" Text="{Binding UserName}" VerticalAlignment="Center" FontSize="16" />
-                <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Margin="10">
-                    <StackPanel Width="250">
-                        <ItemsControl ItemsSource="{Binding RightMenuItems}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Vertical" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Button HorizontalContentAlignment="Stretch"
-                                            Command="{Binding Command}"
-                                            CommandParameter="{Binding}"
-                                            Height="60" HorizontalAlignment="Stretch" Background="Transparent"
-                                            BorderBrush="Transparent">
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                            <!-- Si tus elementos cuentan con un ícono, puedes usar un PackIcon similar al menú izquierdo -->
-                                            <materialDesign:PackIcon Kind="{Binding IconKind}"
-                                                                     Height="25" Width="25" Margin="10" />
-                                            <TextBlock Text="{Binding DisplayName}"
-                                                       VerticalAlignment="Center" Margin="20,10,0,10" />
-                                        </StackPanel>
-                                    </Button>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,10,0"  Background="Transparent">
+                <TextBlock x:Name="TxtUserName" Text="{Binding UserName}" VerticalAlignment="Center" FontSize="16" Background="Transparent" />
+                <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Margin="10" >
+
+                      <StackPanel Width="250"  >
+                          <ItemsControl ItemsSource="{Binding RightMenuItems}" >
+                              <ItemsControl.ItemsPanel>
+                                  <ItemsPanelTemplate>
+                                      <StackPanel Orientation="Vertical" />
+                                  </ItemsPanelTemplate>
+                              </ItemsControl.ItemsPanel>
+                              <ItemsControl.ItemTemplate>
+                                  <DataTemplate>
+                                      <Button HorizontalContentAlignment="Stretch"
+                                              Command="{Binding Command}"
+                                              CommandParameter="{Binding}"
+                                              Height="60" HorizontalAlignment="Stretch" Background="Transparent"
+                                              BorderBrush="Transparent">
+                                          <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                              <!-- Si tus elementos cuentan con un ícono, puedes usar un PackIcon similar al menú izquierdo -->
+                                              <materialDesign:PackIcon Kind="{Binding IconKind}"
+                                                                       Height="25" Width="25" Margin="10" />
+                                              <TextBlock Text="{Binding DisplayName}"
+                                                         VerticalAlignment="Center" Margin="20,10,0,10" />
+                                          </StackPanel>
+                                      </Button>
+                                  </DataTemplate>
+                              </ItemsControl.ItemTemplate>
+                          </ItemsControl>
+                      </StackPanel>
+
                 </materialDesign:PopupBox>
             </StackPanel>
-
         </Grid>
-        <Grid x:Name="GridMenu" Width="60" HorizontalAlignment="Left" Background="{DynamicResource MaterialDesignPaper}">
+        <Grid x:Name="GridMenu" Width="60" HorizontalAlignment="Left" Background="#B8CCCC ">
             <Grid.Effect>
                 <DropShadowEffect BlurRadius="2" ShadowDepth="1" Color="#FFAEAEAE" />
             </Grid.Effect>
@@ -138,7 +136,7 @@
 
                     <Menu.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <StackPanel Orientation="Vertical" />
+                            <StackPanel Orientation="Vertical"  />
                         </ItemsPanelTemplate>
                     </Menu.ItemsPanel>
                 </Menu>
@@ -160,6 +158,5 @@
                 Width="10"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Right" Margin="0,0,0,12" />
-
     </Grid>
 </Window>

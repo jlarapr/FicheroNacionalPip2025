@@ -15,7 +15,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!-- DataTemplate para el ícono -->
-    <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="WhiteSmoke" />
+    <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#0C2F55" />
     <SolidColorBrush x:Key="PrimaryHueLightBrush" Color="DarkGray" />
     <DataTemplate x:Key="MenuItemIconTemplate">
         <materialDesign:PackIcon
@@ -75,7 +75,7 @@
                                AllowsTransparency="True"
                                Focusable="False"
                                PopupAnimation="Fade">
-                            <Border Background="{DynamicResource MaterialDesignPaper}"
+                            <Border Background="#B8CCCC"
                                     Padding="5">
                                 <StackPanel IsItemsHost="True" />
                             </Border>

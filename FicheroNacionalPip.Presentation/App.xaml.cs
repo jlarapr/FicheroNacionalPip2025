@@ -5,7 +5,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using FicheroNacionalPip.Presentation.ViewModels;
+using FicheroNacionalPip.Presentation.ViewModels.LeftMenu;
+using FicheroNacionalPip.Presentation.ViewModels.RightMenu;
 using FicheroNacionalPip.Presentation.Views;
+using FicheroNacionalPip.Presentation.Views.LeftMenu;
+using FicheroNacionalPip.Presentation.Views.RightMenu;
 
 namespace FicheroNacionalPip.Presentation;
 
@@ -19,17 +23,41 @@ public partial class App : Application {
         Host = Microsoft.Extensions.Hosting.Host
             .CreateDefaultBuilder()
             .ConfigureServices((context, services) => {
-                services.AddSingleton(typeof(Lazy<>), typeof(LazyService<>));
 
                 // Aquí registras todo
                 services.AddSingleton<MainWindow>();
                 services.AddSingleton<MainBaseMainWindowViewModel>();
+
+                // Right Menu
+                services.AddSingleton<SettingWindow>();
+                services.AddSingleton<SettingViewModel>();
+                services.AddSingleton<AdminWindow>();
+                services.AddSingleton<AdminViewModel>();
+                services.AddSingleton<ChangePasswordWindow>();
+                services.AddSingleton<ChangePasswordViewModel>();
+                services.AddSingleton<HelpWindow>();
+                services.AddSingleton<HelpViewModel>();
+                services.AddSingleton<LoginWindow>();
+                services.AddSingleton<LoginViewModel>();
+                services.AddSingleton<LogoutWindow>();
+                services.AddSingleton<LogoutViewModel>();
+
+                // Left Menu
                 services.AddSingleton<HomeWindow>();
                 services.AddSingleton<HomeViewModel>();
+                services.AddSingleton<ListaWindow>();
+                services.AddSingleton<ListaViewModel>();
+                services.AddSingleton<MasterAfiliadosWindow>();
+                services.AddSingleton<MasterAfiliadosViewModel>();
+                services.AddSingleton<MasterCeeWindow>();
+                services.AddSingleton<MasterCeeViewModel>();
+                services.AddSingleton<MembretesWindow>();
+                services.AddSingleton<MembretesViewModel>();
 
                 // Servicio abstracto
                 //  services.AddSingleton<BaseMainWindows, BaseMainWindowsService>();
                 services.AddSingleton<IViewService, ViewService>();
+                services.AddSingleton(typeof(Lazy<>), typeof(LazyService<>));
 
                 // Logging opcional
                 services.AddLogging(config => { config.AddConsole(); });

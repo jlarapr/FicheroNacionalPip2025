@@ -43,33 +43,33 @@ public partial class MainBaseMainWindowViewModel : BaseMainWindowsService {
 
     private void SetMenu() {
         MenuItems = [
-            new MenuItemModel { DisplayName = "Home", IconKind = PackIconKind.Home, Command = YourItemCommand },
-            new MenuItemModel { DisplayName = "Search", IconKind = PackIconKind.Search,
+            new MenuItemModel { DisplayName = "Home", IconKind = PackIconKind.Home, Command = ButtonMenuItemCommand },
+            new MenuItemModel {
+                DisplayName = "Search", IconKind = PackIconKind.Search,
                 SubItems = new ObservableCollection<MenuItemModel> {
-                    new() { DisplayName = "Master Afiliados", IconKind = PackIconKind.Search, Command = YourItemCommand, },
-                    new() { DisplayName = "Master CEE", IconKind = PackIconKind.Search, Command = YourItemCommand, }
+                    new() { DisplayName = "Master Afiliados", IconKind = PackIconKind.Search, Command = ButtonMenuItemCommand, },
+                    new() { DisplayName = "Master CEE", IconKind = PackIconKind.Search, Command = ButtonMenuItemCommand, }
                 }
             },
             new MenuItemModel {
-                DisplayName = "Reports", IconKind = PackIconKind.FileReport, Command = YourItemCommand,
-                SubItems = new () {
-                    new MenuItemModel { DisplayName = "Lista", IconKind = PackIconKind.FileReport, Command = YourItemCommand },
-                    new MenuItemModel { DisplayName = "Membretes", IconKind = PackIconKind.FileReport, Command = YourItemCommand }
+                DisplayName = "Reports", IconKind = PackIconKind.FileReport, Command = ButtonMenuItemCommand,
+                SubItems = new() {
+                    new MenuItemModel { DisplayName = "Lista", IconKind = PackIconKind.FileReport, Command = ButtonMenuItemCommand },
+                    new MenuItemModel { DisplayName = "Membretes", IconKind = PackIconKind.FileReport, Command = ButtonMenuItemCommand }
                 }
-
             },
-            new MenuItemModel { DisplayName = "Exit", IconKind = PackIconKind.ExitToApp, Command = YourItemCommand }
+            new MenuItemModel { DisplayName = "Exit", IconKind = PackIconKind.ExitToApp, Command = ButtonMenuItemCommand }
         ];
 
         RightMenuItems = new ObservableCollection<MenuItemModel> {
-            new() { DisplayName = "Admin", IconKind = PackIconKind.Account, Command = RightItemCommand },
-            new() { DisplayName = "Settings", IconKind = PackIconKind.Settings, Command = RightItemCommand },
-            new() { DisplayName = "Change Password", IconKind = PackIconKind.LockReset, Command = RightItemCommand },
+            new() { DisplayName = "Admin", IconKind = PackIconKind.Account, Command = ButtonMenuItemCommand },
+            new() { DisplayName = "Settings", IconKind = PackIconKind.Settings, Command = ButtonMenuItemCommand },
+            new() { DisplayName = "Change Password", IconKind = PackIconKind.LockReset, Command = ButtonMenuItemCommand },
 
-            new() { DisplayName = "Help", IconKind = PackIconKind.HelpCircle, Command = RightItemCommand },
-            new() { DisplayName = "Login", IconKind = PackIconKind.Login, Command = RightItemCommand },
-            new() { DisplayName = "Logout", IconKind = PackIconKind.Logout, Command = RightItemCommand },
-            new() { DisplayName = "Exit", IconKind = PackIconKind.ExitToApp, Command = RightItemCommand }
+            new() { DisplayName = "Help", IconKind = PackIconKind.HelpCircle, Command = ButtonMenuItemCommand },
+            new() { DisplayName = "Login", IconKind = PackIconKind.Login, Command = ButtonMenuItemCommand },
+            new() { DisplayName = "Logout", IconKind = PackIconKind.Logout, Command = ButtonMenuItemCommand },
+            new() { DisplayName = "Exit", IconKind = PackIconKind.ExitToApp, Command = ButtonMenuItemCommand }
         };
     }
 
@@ -95,41 +95,16 @@ public partial class MainBaseMainWindowViewModel : BaseMainWindowsService {
     }
 
     [RelayCommand]
-    private void YourItem(object parameter) {
-        if (parameter is MenuItemModel clickedItem) {
-            switch (clickedItem.DisplayName) {
-                case "Home":
-                    CurrentView = _viewService.GetView("Home");
-                    break;
-                case "Exit":
-                    OnClosing?.Invoke();
-                    break;
-                default:
-                    CurrentView = null;
-                    break;
-            }
-        }
-    }
+    private void ButtonMenuItem(object parameter) {
+        if (parameter is not MenuItemModel clickedItem) return;
 
-    [RelayCommand]
-    private void RightItem(object parameter) {
-        if (parameter is MenuItemModel clickedItem) {
-            switch (clickedItem.DisplayName) {
-                case "Admin":
-                case "Settings":
-                case "Index Schema":
-                case "Index Load":
-                case "Index Delete":
-                case "Change Password":
-                case "Help":
-                case "Login":
-                case "Logout":
-                    CurrentView = null;
-                    break;
-                case "Exit":
-                    OnClosing?.Invoke();
-                    break;
-            }
+        string? nameWindow = clickedItem.DisplayName;
+
+        if (nameWindow == "Exit") {
+            OnClosing?.Invoke();
+            return;
         }
+
+        CurrentView = _viewService.GetView(nameWindow ?? "Home");
     }
 }
