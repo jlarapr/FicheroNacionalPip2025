@@ -5,9 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:rightMenu="clr-namespace:FicheroNacionalPip.Presentation.ViewModels.RightMenu"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d"
-             d:DesignHeight="1000" d:DesignWidth="1000"
-             d:DataContext="{d:DesignInstance Type=rightMenu:SettingViewModel, IsDesignTimeCreatable=True}">
+             mc:Ignorable="d" d:DesignWidth="1000" d:Height="1000"
+             d:DataContext="{d:DesignInstance Type=rightMenu:SettingViewModel, IsDesignTimeCreatable=True}" >
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -23,12 +22,102 @@
             </Border.Effect>
             <Grid>
                 <TextBlock Text="{Binding MyTitle}" VerticalAlignment="Top" Height="60" FontWeight="Bold" FontSize="36" Margin="5" Foreground="Black" />
-                <Button x:Name="BtnSave" Content="Save"  HorizontalAlignment="Right" Margin="0,0,90.556,51.667"   VerticalAlignment="Bottom" />
                 <Grid HorizontalAlignment="Right"  VerticalAlignment="Top"   >
                     <materialDesign:PackIcon Kind="Settings" Height="125" Width="125"  Foreground="Green" Margin="10,10,10,10" />
                 </Grid>
-                <TextBlock Text="GUI" Foreground="Black" HorizontalAlignment="Left" Margin="10,0,0,22.444" TextWrapping="Wrap" Width="319" Height="16" VerticalAlignment="Bottom"/>
+                <!--Password Policy-->
+                <TextBlock Height="46" Margin="10,97,10,0" TextWrapping="Wrap" Text="Password Policy" TextAlignment="Center" FontSize="20" VerticalAlignment="Top" />
+                <Grid Margin="10,140,10,0" Background="AliceBlue" Height="248" VerticalAlignment="Top" >
+                    <Border CornerRadius="5" BorderThickness="2" BorderBrush="Black" Margin="10,10,10,0" Height="42" VerticalAlignment="Top"    >
+                        <Grid Margin="1">
+                            <TextBlock Text="Maximum password age:" HorizontalAlignment="Left" Margin="10,8,0,0" Width="192" VerticalAlignment="Top"   />
+                            <TextBlock Text="0" TextAlignment="Center"  Background="AliceBlue" Margin="377,1,140,0" FontSize="25" VerticalAlignment="Top" />
+                            <Button BorderThickness="0" Height="32" Width="54" VerticalAlignment="Top" Margin="0,1,25,0" d:LayoutOverrides="Width" HorizontalAlignment="Right"  >
+                                <materialDesign:PackIcon Kind="ArrowBottom" Foreground="Black" />
+                            </Button>
+                            <Button BorderThickness="0"  Width="54" Height="32" Margin="0,1,84,0" VerticalAlignment="Top" HorizontalAlignment="Right" d:LayoutOverrides="Width"    >
+                                <materialDesign:PackIcon Kind="ArrowUp" Foreground="Black" />
+                            </Button>
+                        </Grid>
+                    </Border>
+                    <Border CornerRadius="5" BorderThickness="2" BorderBrush="Black" Margin="10,55,10,0" Height="42" VerticalAlignment="Top"    >
+                        <Grid Margin="1">
+                            <TextBlock Text="Numbers Base 10 digits (0 through 9):" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="279"/>
+                            <TextBlock Text="0" TextAlignment="Center"  Background="AliceBlue" Margin="377,0,140,0" FontSize="25" VerticalAlignment="Center" Height="33" />
+                            <Button BorderThickness="0" Height="32" Width="54" VerticalAlignment="Top" Margin="0,1,25,0" d:LayoutOverrides="Width" HorizontalAlignment="Right"  >
+                                <materialDesign:PackIcon Kind="ArrowBottom" Foreground="Black" />
+                            </Button>
+                            <Button BorderThickness="0"  Width="54" Height="32" Margin="0,1,84,0" VerticalAlignment="Top" HorizontalAlignment="Right" d:LayoutOverrides="Width"    >
+                                <materialDesign:PackIcon Kind="ArrowUp" Foreground="Black" />
+                            </Button>
+                        </Grid>
+                    </Border>
+                    <Border CornerRadius="5" BorderThickness="2" BorderBrush="Black" Margin="10,143,10,0" Height="42" VerticalAlignment="Top"    >
+                        <Grid Margin="1">
+                            <TextBlock Text="Uppercase Characters:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,8,0,0" Width="279" />
+                            <TextBlock Text="0" TextAlignment="Center"  Background="AliceBlue" Margin="377,0,140,0" FontSize="25" VerticalAlignment="Center" Height="33" />
+                            <Button BorderThickness="0" Height="32" Width="54" VerticalAlignment="Top" Margin="0,1,25,0" d:LayoutOverrides="Width" HorizontalAlignment="Right"  >
+                                <materialDesign:PackIcon Kind="ArrowBottom" Foreground="Black" />
+                            </Button>
+                            <Button BorderThickness="0"  Width="54" Height="32" Margin="0,1,84,0" VerticalAlignment="Top" HorizontalAlignment="Right" d:LayoutOverrides="Width"    >
+                                <materialDesign:PackIcon Kind="ArrowUp" Foreground="Black" />
+                            </Button>
+                        </Grid>
+                    </Border>
+                    <Border CornerRadius="5" BorderThickness="2" BorderBrush="Black" Margin="10,99,10,0" Height="42" VerticalAlignment="Top"    >
+                        <Grid Margin="1">
+                            <TextBlock Text="Non-alphabetic Characters (for example, !, $, #, %):" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,8,0,0" Width="362"/>
+                            <TextBlock Text="0" TextAlignment="Center"  Background="AliceBlue" Margin="377,0,140,0" FontSize="25" VerticalAlignment="Center" Height="33" />
+                            <Button BorderThickness="0" Height="32" Width="54" VerticalAlignment="Top" Margin="0,1,25,0" d:LayoutOverrides="Width" HorizontalAlignment="Right"  >
+                                <materialDesign:PackIcon Kind="ArrowBottom" Foreground="Black" />
+                            </Button>
+                            <Button BorderThickness="0"  Width="54" Height="32" Margin="0,1,84,0" VerticalAlignment="Top" HorizontalAlignment="Right" d:LayoutOverrides="Width"    >
+                                <materialDesign:PackIcon Kind="ArrowUp" Foreground="Black" />
+                            </Button>
+                        </Grid>
+                    </Border>
+                    <Border CornerRadius="5" BorderThickness="2" BorderBrush="Black" Margin="10,189,10,0" Height="42" VerticalAlignment="Top"    >
+                        <Grid Margin="1">
+                            <TextBlock Text="Minimum password length:" HorizontalAlignment="Left" Margin="10,8,0,0" Width="279" Height="20" VerticalAlignment="Top"/>
+                            <TextBlock Text="0" TextAlignment="Center"  Background="AliceBlue" Margin="377,0,140,0" FontSize="25" VerticalAlignment="Center" Height="33" />
+                            <Button BorderThickness="0" Height="32" Width="54" VerticalAlignment="Top" Margin="0,1,25,0" d:LayoutOverrides="Width" HorizontalAlignment="Right"  >
+                                <materialDesign:PackIcon Kind="ArrowBottom" Foreground="Black" />
+                            </Button>
+                            <Button BorderThickness="0"  Width="54" Height="32" Margin="0,1,84,0" VerticalAlignment="Top" HorizontalAlignment="Right" d:LayoutOverrides="Width"    >
+                                <materialDesign:PackIcon Kind="ArrowUp" Foreground="Black" />
+                            </Button>
+                        </Grid>
+                    </Border>
 
+
+
+                </Grid>
+
+                <!--DataBase Policy-->
+                <TextBlock Margin="10,395,10,0" TextWrapping="Wrap" Text="DataBase Policy" TextAlignment="Center" FontWeight="Bold" FontSize="20" VerticalAlignment="Top" d:LayoutOverrides="VerticalAlignment"   />
+                <Grid Background="AliceBlue" Margin="10,430,9,57" d:LayoutOverrides="VerticalAlignment">
+                    <RadioButton x:Name="RdbMsSql" Content="MSSQL" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
+                    <TextBox x:Name="TxtCnnStr" Margin="10,40,10,0" TextWrapping="Wrap"  Height="59" VerticalAlignment="Top"  />
+                    <Button x:Name="BtnTest" Content="Test Cnn/Create DB" Margin="0,3,9,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="146" Height="30"/>
+                    <Label Content="Example:" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Height="50" Margin="10,0,0,10" Width="75"/>
+                    <TextBox IsReadOnly="True" Background="AliceBlue" BorderThickness="0" HorizontalAlignment="Left" Margin="90,0,0,12" TextWrapping="Wrap" Text="Integrated Security=true;Data Source=.\SQLEXPRESS;Initial Catalog=MyDataBase;" Width="328" Height="48" VerticalAlignment="Bottom"/>
+                    <TextBlock TextAlignment="Center" Margin="85,10,160,0" TextWrapping="Wrap" Text="MS SQL SERVER Connection String" VerticalAlignment="Top"/>
+                    <Button x:Name="BtnSetup"  Content="SET"  HorizontalAlignment="Right" Margin="0,236,10,0" Width="75" Height="NaN" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="ChkBoxIntegratedSecurity" Content="Integrated Security" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top" Width="153" Height="15"/>
+                    <TextBlock HorizontalAlignment="Left" TextAlignment="Left" Margin="10,127,0,0" TextWrapping="Wrap" Text="Data Source:" VerticalAlignment="Top" Width="153" Height="20"/>
+                    <TextBlock HorizontalAlignment="Left" TextAlignment="Left" Margin="10,157,0,0" TextWrapping="Wrap" Text="Initial Catalog:" VerticalAlignment="Top" Width="153" Height="20"/>
+                    <TextBlock HorizontalAlignment="Left" TextAlignment="Left" Margin="10,184,0,0" TextWrapping="Wrap" Text="User ID:" VerticalAlignment="Top" Width="153" Height="20"/>
+                    <TextBlock HorizontalAlignment="Left" TextAlignment="Left" Margin="10,213,0,0" TextWrapping="Wrap" Text="Password:" VerticalAlignment="Top" Width="153" Height="20"/>
+                    <TextBox x:Name="TxtDataSource" Height="20" Margin="168,127,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                    <TextBox x:Name="TxtInitialCatalog" IsEnabled="False" Height="20" Margin="168,157,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                    <TextBox x:Name="TxtUserID" Height="20" Margin="168,184,10,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+                    <PasswordBox x:Name="TxtPassword" PasswordChar="*" Margin="168,213,10,0" VerticalAlignment="Top" Height="20"/>
+                </Grid>
+
+                <!--Bottom-->
+                <TextBlock x:Name="TxtUser" Text="USER NAME" HorizontalAlignment="Left" Margin="10,0,0,34" TextWrapping="Wrap"  VerticalAlignment="Bottom" Width="319" Foreground="Black"/>
+                <TextBlock Text="GUI" Foreground="Black" HorizontalAlignment="Left" Margin="10,0,0,12" TextWrapping="Wrap" Width="319" Height="16" VerticalAlignment="Bottom"  />
+                <Button x:Name="BtnSave" Content="Save"  HorizontalAlignment="Right" Margin="0,0,20,17" VerticalAlignment="Bottom" />
             </Grid>
         </Border>
     </Grid>

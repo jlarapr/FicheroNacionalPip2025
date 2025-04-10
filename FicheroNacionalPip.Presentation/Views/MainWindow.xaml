@@ -13,7 +13,7 @@
         helpers:KeyPreviewKeyDown.EnableKeyPreviewKeyDown="True"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=vm:MainBaseMainWindowViewModel, IsDesignTimeCreatable=True}"
-        Title="{Binding Title}" Height="859.556" Width="1277.111">
+        Title="{Binding Title}" Height="1000" Width="1277.111">
 
     <Window.Resources>
         <ResourceDictionary>
