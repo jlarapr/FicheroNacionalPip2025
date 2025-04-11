@@ -3,20 +3,67 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:rightMenu="clr-namespace:FicheroNacionalPip.Presentation.ViewModels.RightMenu"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=rightMenu:AdminViewModel, IsDesignTimeCreatable=True}"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="1000" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Dictionary/DictionaryWindow.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
     <Grid Cursor="Hand" Background="Transparent" >
-        <Border BorderBrush="Black" Background="Beige" HorizontalAlignment="Stretch" Padding="4" BorderThickness="3" CornerRadius="10" Margin="0">
+        <Border BorderBrush="Black" Background="Beige" Padding="4" BorderThickness="3" CornerRadius="10" Margin="-28,0,28,0">
             <Border.Effect>
                 <DropShadowEffect Color="Gray" Opacity="80" ShadowDepth="16"></DropShadowEffect>
             </Border.Effect>
-            <Grid>
-                <TextBlock Text="{Binding MyTitle}" VerticalAlignment="Top" Height="60" FontWeight="Bold" FontSize="36" Margin="5" Foreground="Black" />
-            </Grid>
         </Border>
+        <Grid HorizontalAlignment="Right"  VerticalAlignment="Top"   >
+            <materialDesign:PackIcon Kind="UserAdd" Height="125" Width="125"  Foreground="Green" Margin="10,10,100,10" />
+        </Grid>
+
+
+
+        <TextBlock Margin="10,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                   Text="Users:" Foreground="Black" FontSize="25" FontWeight="Bold" />
+
+        <ComboBox TabIndex="0" Width="260" Height="23" Margin="10,140,0,0"
+                  HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+        <TextBlock Margin="10,170,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                   Text="Password:" Foreground="Black" FontSize="25" FontWeight="Bold" />
+
+        <PasswordBox Margin="10,210,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                     FontSize="25" FontWeight="Bold"  TabIndex="2"
+                     Width="260" Height="39" />
+
+        <TextBlock Margin="10,260,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                   Text="Password Verification:" Foreground="Black" FontSize="25" FontWeight="Bold" />
+
+        <PasswordBox Margin="10,300,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                     FontSize="25" FontWeight="Bold"  TabIndex="3"
+                     Width="260" Height="39" />
+
+        <TextBlock Margin="10,360,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+           Text="Email:" Foreground="Black" FontSize="25" FontWeight="Bold" />
+
+        <TextBox Margin="10,400,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                 Width="260" Height="39"
+                   Text="" Foreground="Black" FontSize="25" FontWeight="Bold" />
+
+
+        <Grid Margin="323,346,0,0" HorizontalAlignment="Left" Width="328" Background="AliceBlue" Height="111" VerticalAlignment="Top">
+            <CheckBox Content="Locked"  Height="25" FontSize="15" Margin="0,14,215,0" HorizontalAlignment="Right" VerticalAlignment="Top" />
+            <CheckBox Content="Disable" FontSize="15" VerticalAlignment="Top" Margin="0,42,214,0" HorizontalAlignment="Right" />
+            <CheckBox Content="Force Change Password" FontSize="15" VerticalAlignment="Top" Margin="0,70,105,0" HorizontalAlignment="Right" />
+
+        </Grid>
+
+
     </Grid>
 
 </UserControl>

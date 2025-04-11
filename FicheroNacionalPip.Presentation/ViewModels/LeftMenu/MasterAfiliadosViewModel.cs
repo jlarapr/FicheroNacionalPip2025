@@ -6,6 +6,6 @@ public partial class MasterAfiliadosViewModel : ObservableObject {
     [ObservableProperty] private string _myTitle;
 
     public MasterAfiliadosViewModel() {
-        MyTitle = "Master Afiliados";
+        MyTitle = "Master Afiliados.";
     }
 }
