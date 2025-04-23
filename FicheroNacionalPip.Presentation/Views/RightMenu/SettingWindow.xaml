@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:rightMenu="clr-namespace:FicheroNacionalPip.Presentation.ViewModels.RightMenu"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" d:DesignWidth="1000" d:Height="1000"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="1000"
              d:DataContext="{d:DesignInstance Type=rightMenu:SettingViewModel, IsDesignTimeCreatable=True}" >
     <UserControl.Resources>
         <ResourceDictionary>

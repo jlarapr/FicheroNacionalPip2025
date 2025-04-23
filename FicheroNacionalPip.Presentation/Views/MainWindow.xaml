@@ -33,7 +33,7 @@
     </Window.Triggers>
 
     <Grid Background="Transparent">
-        <Grid x:Name="GridMain" Margin="123,90,52.889,57.556" Background="White">
+        <Grid x:Name="GridMain" Margin="80,70,21,48" Background="White">
             <DockPanel>
                 <ContentControl Foreground="White" Content="{Binding CurrentView}" DockPanel.Dock="Bottom" />
             </DockPanel>

@@ -7,4 +7,6 @@ public partial class AdminWindow  {
         InitializeComponent();
         DataContext = adminViewModel;
     }
+
+ 
 }

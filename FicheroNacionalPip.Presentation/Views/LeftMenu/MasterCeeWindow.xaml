@@ -4,18 +4,43 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300"
              xmlns:leftMenu="clr-namespace:FicheroNacionalPip.Presentation.ViewModels.LeftMenu"
-             d:DataContext="{d:DesignInstance Type=leftMenu:MasterCeeViewModel, IsDesignTimeCreatable=True}">
+             d:DataContext="{d:DesignInstance Type=leftMenu:MasterCeeViewModel, IsDesignTimeCreatable=True}" d:DesignWidth="1000" d:DesignHeight="800" >
+
 
     <Grid Cursor="Hand" Background="Transparent" >
-        <Border BorderBrush="Black" Background="Beige" HorizontalAlignment="Stretch" Padding="4" BorderThickness="3" CornerRadius="10" Margin="0">
-            <Border.Effect>
-                <DropShadowEffect Color="Gray" Opacity="80" ShadowDepth="16"></DropShadowEffect>
-            </Border.Effect>
-            <Grid>
-                <TextBlock Text="{Binding MyTitle}" VerticalAlignment="Top" Height="60" FontWeight="Bold" FontSize="36" Margin="5" Foreground="Black" />
-            </Grid>
+        <Border BorderBrush="Green" CornerRadius="2" BorderThickness="1"  Background="#FFD9E1F1" Height="45" VerticalAlignment="Top">
+            <TextBlock Text="{Binding MyTitle}"  FontWeight="Bold" FontSize="24" Foreground="Black"  TextAlignment="Center" />
         </Border>
+        <Border BorderBrush= "Green" CornerRadius="2" BorderThickness="1"  Background="White" Margin="0,46,0,0" >
+
+            <Grid Background="Beige" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="14*"/>
+                    <RowDefinition Height="47*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="141*"/>
+                    <ColumnDefinition Width="350*"/>
+                    <ColumnDefinition Width="218*"/>
+                    <ColumnDefinition Width="269*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Número electoral"    Margin="10,18,10,0"  Foreground="Black" Height="22" VerticalAlignment="Top" FontWeight="Bold" />
+                <TextBlock Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Apellido paterno"    Margin="10,40,10,0"  Foreground="Black" Height="22" VerticalAlignment="Top" FontWeight="Bold" />
+                <TextBlock Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Apellido materno"    Margin="10,63,10,0"  Foreground="Black" Height="22" VerticalAlignment="Top" FontWeight="Bold" />
+                <TextBlock Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Nombre del elector"  Margin="10,85,10,0"  Foreground="Black" Height="22" VerticalAlignment="Top" FontWeight="Bold" />
+                <TextBlock Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Nombre del padre"    Margin="10,109,10,0" Foreground="Black" Height="22" VerticalAlignment="Top" FontWeight="Bold" />
+                <TextBlock Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Nombre de la madre"  Margin="10,136,10,0" Foreground="Black" Height="22" VerticalAlignment="Top" FontWeight="Bold" />
+                <TextBlock Grid.Row="0" Grid.Column="2" TextWrapping="Wrap" Text="Fecha de nacimiento"  Margin="10,18,87,0" Foreground="Black" Height="22" VerticalAlignment="Top" FontWeight="Bold" />
+                <TextBlock Grid.Row="0" Grid.Column="2" TextWrapping="Wrap" Text="Lugar de nacimiento"  Margin="10,40,87,0" Foreground="Black" Height="22" VerticalAlignment="Top" FontWeight="Bold" />
+            </Grid>
+
+
+
+        </Border>
+
     </Grid>
+
+
 </UserControl>

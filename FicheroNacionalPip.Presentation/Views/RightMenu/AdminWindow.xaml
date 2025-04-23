@@ -7,8 +7,8 @@
              xmlns:rightMenu="clr-namespace:FicheroNacionalPip.Presentation.ViewModels.RightMenu"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=rightMenu:AdminViewModel, IsDesignTimeCreatable=True}"
-             Width="800" Height="500"
-             >
+             Width="800" Height="500">
+
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -17,16 +17,9 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
+
     <Grid Margin="0,0,0,0">
-        <Border
-        Margin="10"
-        Padding="4"
-        HorizontalAlignment="Stretch"
-        VerticalAlignment="Stretch"
-        Background="Beige"
-        BorderBrush="Black"
-        BorderThickness="5"
-        CornerRadius="10">
+        <Border Margin="10" Padding="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Beige" BorderBrush="Black" BorderThickness="5" CornerRadius="10">
             <Border.Effect>
                 <DropShadowEffect
                 Opacity="80"
@@ -34,51 +27,35 @@
                 Color="Gray" />
             </Border.Effect>
             <Grid Margin="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="102*"/>
-                    <RowDefinition Height="134*"/>
-                    <RowDefinition Height="129*"/>
-                    <RowDefinition Height="395*"/>
-                </Grid.RowDefinitions>
-                <Label
-                x:Name="label"
-                Width="67"
-                Height="25"
-                Margin="10,7,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Content="Users:"
-                FontSize="12"
-                FontWeight="Bold" />
-                <ComboBox
-                x:Name="CbxUsers"
-                ItemsSource="{Binding CbxUsers,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                SelectedIndex ="{Binding CbxUsersSelectedIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                SelectedItem ="{Binding CbxUsersSelectedItem,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                IsEnabled="{Binding CbxUsersIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                Visibility="{Binding CbxUsersVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                TabIndex="0"
-                Width="365"
-                Height="22"
-                Margin="10,33,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top" />
+                <Label x:Name="label" Width="67" Height="25" Margin="10,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Users:" FontSize="12" FontWeight="Bold" />
+                <ComboBox x:Name="CbxUsers"
+                          ItemsSource="{Binding CbxUsers,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                          SelectedIndex ="{Binding CbxUsersSelectedIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                          SelectedItem ="{Binding CbxUsersSelectedItem,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                          IsEnabled="{Binding CbxUsersIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                          Visibility="{Binding CbxUsersVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                          TabIndex="0"
+                          Width="355"
+                          Height="22"
+                          Margin="10,33,0,0"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Top" />
                 <Label
                 x:Name="label_Copy"
                 Width="187"
                 Height="24"
-                Margin="11,7,0,0"
+                Margin="11,69,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Content="Password:"
                 FontSize="12"
-                FontWeight="Bold" Grid.Row="1" />
+                FontWeight="Bold" />
                 <TextBox x:Name="TxtVisiblePasswordbox" 
                      Text="{Binding TxtVisiblePasswordbox,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                      Visibility="{Binding TxtVisiblePasswordboxVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                      MaxLength="20" IsReadOnly="True" Height="21" TextWrapping="NoWrap"  
-                     FontSize="12" Padding="5,2,47,0" HorizontalAlignment="Left" Margin="10,31,0,0"  
-                     VerticalAlignment="Top" Grid.Row="1" Width="365" />
+                     FontSize="12" Padding="5,2,47,0" HorizontalAlignment="Left" Margin="10,93,0,0"  
+                     VerticalAlignment="Top" Width="365" />
                 <PasswordBox
                 x:Name="PbxPassword"
                 PasswordChar="*"
@@ -87,14 +64,14 @@
                 TabIndex="1"
                 Width="365"
                 Height="21"
-                Margin="10,31,0,0"
+                Margin="10,93,0,0"
                 HorizontalAlignment="Left"
-                VerticalAlignment="Top" Grid.Row="1"  />
+                VerticalAlignment="Top"  />
                 <TextBox Height="21" x:Name="TxtVisiblePasswordboxVeri" 
                      Text="{Binding TxtVisiblePasswordboxVeri,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                      Visibility="{Binding TxtVisiblePasswordboxVeriVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                      TextWrapping="NoWrap"  FontSize="12" Padding="5,2,47,0" HorizontalAlignment="Left" 
-                     Margin="10,81,0,0"  VerticalAlignment="Top" Width="365" Grid.Row="1" />
+                     Margin="10,143,0,0"  VerticalAlignment="Top" Width="365" />
                 <PasswordBox
                 x:Name="PbxPasswordVerif"
                 PasswordChar="*"
@@ -103,11 +80,11 @@
                 TabIndex="2"
                 Width="365"
                 Height="21"
-                Margin="10,81,0,0"
+                Margin="10,143,0,0"
                 HorizontalAlignment="Left"
-                VerticalAlignment="Top" Grid.Row="1" />
+                VerticalAlignment="Top" />
 
-                <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,14" Height="119" Width="237" Grid.RowSpan="2"   >
+                <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,331" Height="119" Width="237"   >
                     <materialDesign:PackIcon Kind="UserAdd" Height="106" Width="227"  Foreground="Green" Margin="0,3,0,0" />
                 </Grid>
 
@@ -115,18 +92,18 @@
                 x:Name="lbl"
                 Width="187"
                 Height="24"
-                Margin="10,55,0,0"
+                Margin="10,117,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Content="Password Verification:"
                 FontSize="12"
-                FontWeight="Bold" Grid.Row="1" />
+                FontWeight="Bold" />
                 <GroupBox x:Name="groupBox"
                           Width="271"
                           Height="186"
                           HorizontalAlignment="Left"
                           VerticalAlignment="Top" Foreground="Green"
-                          Header="Access Area" Grid.Row="3" Margin="0,10,0,0" >
+                          Header="Access Area" Margin="0,231,0,0" >
                     <Grid Margin="2">
                         <CheckBox
                         x:Name="CkbCPassword"
@@ -169,59 +146,60 @@
                         Content="Settings" Height="19" VerticalAlignment="Top" />
                     </Grid>
                 </GroupBox>
-                <Button
-                x:Name="BtnAdd"
+                <Button x:Name="BtnAdd"
                 Command="{Binding BtnAdd}"
                 IsEnabled="{Binding BtnAddIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                 Foreground ="{Binding BtnAddForeground,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                Height="25"
-                Margin="276,21,10,0"
+                Width="NaN"
+                Margin="276,242,10,0"
                 VerticalAlignment="Top"
-                Content="Add" Grid.Row="3" Width="NaN" />
+                Content="Add" Height="25" RenderTransformOrigin="0.5,0.5"   >
+                    
+                </Button>
                 <Button x:Name="BtnEdit"
                         Command="{Binding BtnEdit}"
                         IsEnabled="{Binding BtnEditIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                         Foreground ="{Binding BtnEditForeground,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                         Height="25"
-                        Margin="276,81,10,0"
+                        Margin="276,302,10,0"
                         VerticalAlignment="Top" 
-                        Content="Edit" Grid.Row="3" Width="NaN"  />
+                        Content="Edit" Width="NaN"  />
                 <Button
                 x:Name="BtnDelete"
                 Command="{Binding BtnDelete}"
                 IsEnabled="{Binding BtnDeleteIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                 Foreground ="{Binding BtnDeleteForeground,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                Margin="276,112,10,0"
-                Content="Delete" Grid.Row="3" Height="25" Width="NaN" VerticalAlignment="Top" />
+                Margin="276,333,10,0"
+                Content="Delete" Height="25" Width="NaN" VerticalAlignment="Top" />
                 <Button
                 x:Name="BtnSave"
                 Command="{Binding BtnSave}"
                 IsEnabled="{Binding BtnSaveIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                 Foreground ="{Binding BtnSaveForeground,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                Margin="276,141,10,0"
-                Content="Save" Grid.Row="3" Height="25" VerticalAlignment="Top" Width="NaN" />
+                Margin="276,362,10,0"
+                Content="Save" Height="25" VerticalAlignment="Top" Width="NaN" />
                 <Button
                 x:Name="BtnCancel"
                 Command="{Binding BtnCancel}"
                 IsEnabled="{Binding BtnCancelIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                 Foreground ="{Binding BtnCancelForeground,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                Margin="276,171,10,0"
+                Margin="276,392,10,0"
                 VerticalAlignment="Top"
-                Content="Cancel" Grid.Row="3" Height="25" Width="NaN" />
+                Content="Cancel" Height="25" Width="NaN" />
                 <TextBlock
                 x:Name="TxtGUI"
-                Margin="10,0,10,10"
+                Margin="10,426,10,0"
                 Text="{Binding TxtGUI,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                TextWrapping="Wrap" Height="24" VerticalAlignment="Bottom" Grid.Row="3" />
+                TextWrapping="Wrap" Height="24" VerticalAlignment="Top" />
                 <Button
                 x:Name="BtnCPassword"
                 Command="{Binding BtnCPassword}"
                 IsEnabled="{Binding BtnCPasswordIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                 Foreground ="{Binding BtnCPasswordForeground,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                 Height="25"
-                Margin="276,51,10,0"
+                Margin="276,272,10,0"
                 VerticalAlignment="Top"
-                Content="Change Password" Grid.Row="3" Width="NaN" />
+                Content="Change Password" Width="NaN" />
                 <TextBox
                 x:Name="TxtNewUser"
                 Focusable="{Binding TxtNewUserFocusable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
@@ -239,48 +217,46 @@
                 x:Name="lbl_Copy"
                 Width="187"
                 Height="24"
-                Margin="10,8,0,0"
+                Margin="10,161,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Content="Email:"
                 FontSize="12"
-                FontWeight="Bold" Grid.Row="2" />
+                FontWeight="Bold" />
                 <TextBox
                 x:Name="TxtEmail"
                 Text="{Binding TxtEmail,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                 IsEnabled="{Binding TxtEmailIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                
                 Width="365"
                 Height="23"
-                Margin="10,32,0,0"
+                Margin="10,185,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                TextWrapping="Wrap" Grid.Row="2" />
+                TextWrapping="Wrap" />
                 <CheckBox x:Name="ChkLocked" IsEnabled="{Binding ChkLockedIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                       IsChecked="{Binding ChkLockedIsChecked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                       Content="Locked" 
-                      HorizontalAlignment="Left" Margin="380,5,0,0" VerticalAlignment="Top" Width="100" Grid.Row="2" Height="15"/>
+                      HorizontalAlignment="Left" Margin="380,148,0,0" VerticalAlignment="Top" Width="100" Height="15"/>
                 <CheckBox x:Name="ChkDisable" IsEnabled="{Binding ChkDisableIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                       IsChecked="{Binding ChkDisableIsChecked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                      Content="Disable" HorizontalAlignment="Left" Margin="380,25,0,0" VerticalAlignment="Top" Width="100" Grid.Row="2" Height="15"/>
+                      Content="Disable" HorizontalAlignment="Left" Margin="380,168,0,0" VerticalAlignment="Top" Width="100" Height="15"/>
                 <CheckBox x:Name="ChkForceChangePassword" IsEnabled="{Binding ChkForceChangePasswordIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                       IsChecked="{Binding ChkForceChangePasswordIsChecked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                      Content="Force Change Password" HorizontalAlignment="Left" Margin="380,45,0,0" VerticalAlignment="Top" Width="154" Grid.Row="2" Height="15"/>
+                      Content="Force Change Password" HorizontalAlignment="Left" Margin="380,188,0,0" VerticalAlignment="Top" Width="154" Height="15"/>
 
-                <TextBlock Grid.Row="2" x:Name="TxtStampDatePassword" 
+                <TextBlock x:Name="TxtStampDatePassword" 
                            Text="{Binding TxtStampDatePassword,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                           IsEnabled="False" Margin="0,0,16,0" 
+                           IsEnabled="False" Margin="0,143,16,0" 
                            TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Top" Height="24" HorizontalAlignment="Right" Width="149"/>
 
-                <Button Grid.Row="1" BorderThickness="0" 
-                        Width="50" Height="21" Margin="0,31,330,0" 
-                        VerticalAlignment="Top" 
-                        HorizontalAlignment="Right" 
-                        HorizontalContentAlignment="Center"  VerticalContentAlignment="Center"  
-                        Background="White"
+                <Button BorderThickness="1" Style="{x:Null}"
+                        Width="21" Height="21"
+                        Background="Transparent" Margin="374,93,365,346"
                         >
                     <materialDesign:PackIcon Kind="Eye" Foreground="Green" />
                 </Button>
+
+
 
 
 

@@ -3,12 +3,9 @@
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary
-            Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
-        <ResourceDictionary
-            Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.Dark.xaml" />
-        <ResourceDictionary
-            Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.light.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.Dark.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.light.xaml" />
         <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="Green" SecondaryColor="Lime" />
     </ResourceDictionary.MergedDictionaries>
 
@@ -16,6 +13,7 @@
         <Setter Property="Height" Value="35" />
         <Setter Property="Width" Value="100" />
     </Style>
+    
     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignHelperTextBlock}" >
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="FontSize" Value="15"/>
