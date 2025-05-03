@@ -6,8 +6,18 @@
              xmlns:leftMenu="clr-namespace:FicheroNacionalPip.Presentation.ViewModels.LeftMenu"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              x:Class="FicheroNacionalPip.Presentation.Views.LeftMenu.MasterCeeWindow"
+             xmlns:controls="clr-namespace:FicheroNacionalPip.Presentation.Views.Controls"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type leftMenu:MasterCeeViewModel}}" d:DesignWidth="1150" d:DesignHeight="800" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Dictionary/DataGridDictionary.xaml"  />
+                <ResourceDictionary Source="../Dictionary/GlassButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
 
     <Grid Cursor="Hand" Background="Transparent" >
@@ -56,10 +66,21 @@
                 </Grid>
             </Border>
             <Border BorderBrush="Green" CornerRadius="5" BorderThickness="1" Background="White" Margin="0,54,14,0" Height="204" VerticalAlignment="Top" HorizontalAlignment="Right" Width="248">
-                <Grid Background="Beige" Margin="10"></Grid>
+                <Grid Background="Beige" Margin="10">
+                    <Button Content="Buscar" Margin="24,5,24,0" VerticalAlignment="Top"   />
+                    <Button Content="Seguir" Margin="24,48,24,0" VerticalAlignment="Top"  />
+                    <Button Content="Configuración" Margin="24,91,24,0" VerticalAlignment="Top"  />
+                    <Button Content="Limpiar" Margin="24,136,24,0" VerticalAlignment="Top"  />
+
+
+                </Grid>
             </Border>
             <Border BorderBrush="Green" CornerRadius="5" BorderThickness="1" Background="White" Margin="10,263,14,10">
-                <Grid Background="Beige" Margin="10" ></Grid>
+                <Grid Background="Transparent" Margin="10"   >
+                    <controls:CustomDataGrid ItemsSource="{Binding Electors}"  />
+
+
+                </Grid>
             </Border>
 
         </Grid>

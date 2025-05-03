@@ -17,6 +17,7 @@
     <Style TargetType="{x:Type ComboBoxItem}">
         <Setter Property="Foreground" Value="Blue" />
     </Style>
+
     <Style TargetType="{x:Type Button}">
         <Setter Property="Background" Value="#373737" />
         <Setter Property="Foreground" Value="White" />
