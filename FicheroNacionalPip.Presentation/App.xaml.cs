@@ -57,6 +57,7 @@ public partial class App : Application {
                 // Servicio abstracto
                 //  services.AddSingleton<BaseMainWindows, BaseMainWindowsService>();
                 services.AddSingleton<IViewService, ViewService>();
+                services.AddSingleton<IDialogService, DialogService>();
                 services.AddSingleton(typeof(Lazy<>), typeof(LazyService<>));
 
                 // Logging opcional

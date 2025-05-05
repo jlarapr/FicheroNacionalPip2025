@@ -1,6 +1,6 @@
 using System.Windows;
+using System.Windows.Controls;
 using FicheroNacionalPip.Presentation.Interfaces;
-using FicheroNacionalPip.Presentation.Views;
 using FicheroNacionalPip.Presentation.Views.LeftMenu;
 using FicheroNacionalPip.Presentation.Views.RightMenu;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace FicheroNacionalPip.Presentation.Services;
 
 public class ViewService : IViewService
-    {
+{
     private readonly IServiceProvider _serviceProvider;
 
     public ViewService(IServiceProvider serviceProvider)
@@ -18,25 +18,27 @@ public class ViewService : IViewService
 
     public FrameworkElement GetView(string viewName)
     {
-        // Puedes utilizar un switch, un diccionario o cualquier
-        // mecanismo para mapear el identificador con la vista concreta.
         return viewName switch
         {
-             "Home"           => _serviceProvider.GetRequiredService<HomeWindow>(),
-             "Settings"       => _serviceProvider.GetRequiredService<SettingWindow>(),
-             "Admin"          => _serviceProvider.GetRequiredService<AdminWindow>(),
-             "Change Password" => _serviceProvider.GetRequiredService<ChangePasswordWindow>(),
-             "Help"           => _serviceProvider.GetRequiredService<HelpWindow>(),
-             "Login"          => _serviceProvider.GetRequiredService<LoginWindow>(),
-             "Logout"         => _serviceProvider.GetRequiredService<LogoutWindow>(),
-             "Master Afiliados" => _serviceProvider.GetRequiredService<MasterAfiliadosWindow>(),
-             "Master CEE" => _serviceProvider.GetRequiredService<MasterCeeWindow>(),
-             "Lista"          => _serviceProvider.GetRequiredService<ListaWindow>(),
-             "Membretes" => _serviceProvider.GetRequiredService<MembretesWindow>(),
-
-            // Agrega otros casos según las vistas que tengas
-            _ => _serviceProvider.GetRequiredService<HomeWindow>()
+            // Left Menu
+            "Home" => CreateFrameworkElement<HomeWindow>(),
+            "Master Afiliados" => CreateFrameworkElement<MasterAfiliadosWindow>(),
+            "Master CEE" => CreateFrameworkElement<MasterCeeWindow>(),
+            "Lista" => CreateFrameworkElement<ListaWindow>(),
+            "Settings" => CreateFrameworkElement<SettingWindow>(),
+            "Admin" => CreateFrameworkElement<AdminWindow>(),
+            "Change Password" => CreateFrameworkElement<ChangePasswordWindow>(),
+            "Help" => CreateFrameworkElement<HelpWindow>(),
+            "Login" => CreateFrameworkElement<LoginWindow>(),
+            "Logout" => CreateFrameworkElement<LogoutWindow>(),
+            "Membretes" => CreateFrameworkElement<MembretesWindow>(),
+            _ => throw new ArgumentException($"View {viewName} not found")
         };
     }
 
+    private FrameworkElement CreateFrameworkElement<T>() where T : FrameworkElement
+    {
+        var view = _serviceProvider.GetRequiredService<T>();
+        return view;
+    }
 }

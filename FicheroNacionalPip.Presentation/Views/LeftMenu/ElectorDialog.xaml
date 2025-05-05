@@ -1,0 +1,174 @@
+<Window x:Class="FicheroNacionalPip.Presentation.Views.LeftMenu.ElectorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:FicheroNacionalPip.Presentation.ViewModels.LeftMenu"
+        xmlns:helpers="clr-namespace:FicheroNacionalPip.Presentation.Helpers"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:ElectorDialogViewModel, IsDesignTimeCreatable=True}"
+        Title="Editar Elector"
+        Height="600"
+        Width="1050"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        WindowStyle="SingleBorderWindow"
+        helpers:WindowCloser.EnableWindowClosing="True">
+    <DockPanel Margin="10">
+        <!-- Botones Superiores -->
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
+            <Button Content="🖨️ Imprimir" Command="{Binding PrintCommand}" Width="90" Margin="0,0,10,0" Background="Transparent" BorderBrush="Transparent" />
+            <Button Content="💾 Guardar como afiliado" Command="{Binding SaveAsAffilliateCommand}" Width="150" Margin="0,0,10,0" Background="Transparent" BorderBrush="Transparent" />
+            <Button Content="❌ Salir" Command="{Binding CancelCommand}" Width="80" Background="Transparent" BorderBrush="Transparent" />
+        </StackPanel>
+
+        <!-- Cuerpo Principal -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Columna Izquierda -->
+            <Grid Grid.Column="0" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Estatus" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
+                <TextBox Text="{Binding Elector.EstatusElectoral}" Grid.Row="0" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Apellido paterno" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
+                <TextBox Text="{Binding Elector.ApellidoPaterno}" Grid.Row="1" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Apellido materno" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" />
+                <TextBox Text="{Binding Elector.ApellidoMaterno}" Grid.Row="2" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Nombre" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" />
+                <TextBox Text="{Binding Elector.Nombre}" Grid.Row="3" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Nombre del padre" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" />
+                <TextBox Text="{Binding Elector.NombrePadre}" Grid.Row="4" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Nombre de la madre" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" />
+                <TextBox Text="{Binding Elector.NombreMadre}" Grid.Row="5" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Fecha de nacimiento" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" />
+                <DatePicker SelectedDate="{Binding Elector.FechaNacimiento}" Grid.Row="6" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Sexo" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" />
+                <TextBox Text="{Binding Elector.Sexo}" Grid.Row="7" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Color de ojos" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" />
+                <TextBox Text="{Binding Elector.ColorOjos}" Grid.Row="8" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Estatura" Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" />
+                <TextBox Text="{Binding Elector.Estatura}" Grid.Row="9" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Gemelo" Grid.Row="10" Grid.Column="0" VerticalAlignment="Center" />
+                <CheckBox IsChecked="{Binding Elector.Gemelo}" Grid.Row="10" Grid.Column="1" VerticalAlignment="Center" Margin="2" />
+
+                <TextBlock Text="Lugar de nacimiento" Grid.Row="11" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" />
+                <TextBox Text="{Binding Elector.LugarNacimiento}" Grid.Row="11" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Precinto" Grid.Row="12" Grid.Column="0" VerticalAlignment="Center" />
+                <TextBox Text="{Binding Elector.Precinto}" Grid.Row="12" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Unidad" Grid.Row="13" Grid.Column="0" VerticalAlignment="Center" />
+                <TextBox Text="{Binding Elector.UnidadElectoral}" Grid.Row="13" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Tipo sector / Sector" Grid.Row="14" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" />
+                <TextBox Text="{Binding Elector.Sector}" Grid.Row="14" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Dirección residencial" Grid.Row="15" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" />
+                <TextBox Text="{Binding Elector.DireccionResidencial}" Grid.Row="15" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Barrio" Grid.Row="16" Grid.Column="0" VerticalAlignment="Center" />
+                <TextBox Text="{Binding Elector.Barrio}" Grid.Row="16" Grid.Column="1" Margin="2" />
+            </Grid>
+
+            <!-- Columna Derecha -->
+            <Grid Grid.Column="1" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Dirección postal 1" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" />
+                <TextBox Text="{Binding Elector.DireccionPostal1}" Grid.Row="0" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Dirección postal 2" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" />
+                <TextBox Text="{Binding Elector.DireccionPostal2}" Grid.Row="1" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Zona postal" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" />
+                <TextBox Text="{Binding Elector.ZonaPostal}" Grid.Row="2" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Código postal" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" />
+                <TextBox Text="{Binding Elector.CodigoPostal}" Grid.Row="3" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Teléfono" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" />
+                <TextBox Text="{Binding Elector.Telefono}" Grid.Row="4" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Seguro social" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" />
+                <TextBox Text="{Binding Elector.NumeroSeguroSocial}" Grid.Row="5" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Licencia de conducir" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" />
+                <TextBox Text="{Binding Elector.LicenciaConducir}" Grid.Row="6" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Número de cuenta AEE" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" />
+                <TextBox Text="{Binding Elector.NumeroCuentaAee}" Grid.Row="7" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Tipo de impedimento" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" />
+                <TextBox Text="{Binding Elector.TipoImpedimento}" Grid.Row="8" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Facilidad requerida" Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" />
+                <TextBox Text="{Binding Elector.FacilidadRequerida}" Grid.Row="9" Grid.Column="1" Margin="2" />
+
+                <TextBlock Text="Documento de apoyo" Grid.Row="10" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" />
+                <TextBox Text="{Binding Elector.DocumentoApoyo}" Grid.Row="10" Grid.Column="1" Margin="2" />
+
+                <StackPanel Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,20,0,0">
+                    <TextBlock Text="Funcionario de colegio" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,0,5" />
+                    <CheckBox IsChecked="{Binding Elector.FuncionarioDeColegio}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    
+                    <TextBlock Text="Número electoral" HorizontalAlignment="Right" FontSize="16" FontWeight="Bold" Margin="0,20,0,5" />
+                    <TextBlock Text="{Binding Elector.NumeroElectoral}" HorizontalAlignment="Right" FontSize="24" FontWeight="Bold" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>
