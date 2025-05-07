@@ -4,9 +4,29 @@ using MaterialDesignThemes.Wpf;
 
 namespace FicheroNacionalPip.Presentation.Models;
 
-public class MenuItemModel {
+/// <summary>
+/// Representa un ítem de menú en la interfaz de usuario.
+/// </summary>
+public record class MenuItemModel
+{
+    /// <summary>
+    /// Nombre a mostrar en el menú.
+    /// </summary>
     public string? DisplayName { get; init; }
-    public PackIconKind? IconKind { get; set; }
+
+    /// <summary>
+    /// Ícono a mostrar junto al nombre.
+    /// </summary>
+    public PackIconKind? IconKind { get; init; }
+
+    /// <summary>
+    /// Comando a ejecutar cuando se selecciona el ítem.
+    /// </summary>
     public ICommand? Command { get; init; }
-    public ObservableCollection<MenuItemModel>? SubItems { get; set; } = [];
+
+    /// <summary>
+    /// Colección de subítems del menú.
+    /// </summary>
+    public ObservableCollection<MenuItemModel>? SubItems { get; init; } = [];
 }
+

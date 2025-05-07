@@ -14,7 +14,9 @@ Aplicación de escritorio moderna desarrollada en WPF que proporciona una interf
 - Gestión de usuarios y roles
 - Panel de administración
 - Configuración personalizable
-- Sistema de logging integrado
+- Sistema de logging avanzado con Serilog
+- Manejo de errores robusto con patrón Result
+- Inmutabilidad y seguridad de tipos con record classes
 
 ## 🛠️ Tecnologías
 
@@ -24,7 +26,8 @@ Aplicación de escritorio moderna desarrollada en WPF que proporciona una interf
 - **Material Design** - Diseño de interfaz
 - **Entity Framework Core** - ORM para acceso a datos
 - **Microsoft.Extensions.DependencyInjection** - Inyección de dependencias
-- **Microsoft.Extensions.Logging** - Sistema de logging
+- **Serilog** - Sistema de logging avanzado
+- **Result Pattern** - Manejo de errores funcional
 
 ## 📁 Estructura del Proyecto
 
@@ -34,8 +37,10 @@ FicheroNacionalPip2025/
 │   ├── Views/                          # Interfaces de usuario
 │   ├── ViewModels/                     # Lógica de presentación
 │   ├── Models/                         # Modelos de vista
-│   └── Services/                       # Servicios de la capa de presentación
+│   ├── Services/                       # Servicios de la capa de presentación
+│   └── BaseClass/                      # Clases base y abstracciones
 ├── FicheroNacionalPip.Business/        # Capa de lógica de negocio
+│   └── Common/                         # Utilidades comunes (Result, etc.)
 └── FicheroNacionalPip.Data/           # Capa de acceso a datos
 ```
 
@@ -54,12 +59,22 @@ FicheroNacionalPip2025/
 4. Compilar la solución
 5. Ejecutar FicheroNacionalPip.Presentation
 
-## 👥 Acceso al Sistema
+## 📊 Logging y Monitoreo
 
-**Credenciales por defecto:**
-- Usuario: admin
-- Contraseña: admin123
-- Rol: Administrador
+El sistema utiliza Serilog para logging avanzado:
+- Logs diarios en `[DirectorioAplicación]/logs/app_YYYYMMDD.log`
+- Niveles de log: Debug, Information, Warning, Error, Fatal
+- Logging estructurado con contexto enriquecido
+- Registro de eventos de usuario y sistema
+- Seguimiento detallado de errores
+
+## 🔄 Patrones y Prácticas
+
+- **Result Pattern**: Manejo funcional de errores y éxitos
+- **Record Classes**: Inmutabilidad y comparación por valor
+- **MVVM Mejorado**: ViewModels con logging integrado
+- **Dependency Injection**: Configuración centralizada de servicios
+- **Error Handling**: Manejo consistente de errores en toda la aplicación
 
 ## 🔄 Versionado
 
@@ -71,7 +86,8 @@ FicheroNacionalPip2025/
 - La aplicación utiliza hot reload para desarrollo
 - Incluye configuración específica para publicación como archivo único
 - Soporta inyección de dependencias para mejor mantenibilidad
-- Implementa logging para seguimiento de errores
+- Sistema de logging avanzado con rotación diaria de archivos
+- Manejo de errores consistente en toda la aplicación
 
 ## 🤝 Contribución
 
