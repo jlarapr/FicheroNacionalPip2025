@@ -1,7 +1,7 @@
 using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
-using FicheroNacionalPip.Business.Common;
+using FicheroNacionalPip.Common;
 using FicheroNacionalPip.Presentation.Interfaces;
 using Microsoft.Extensions.Logging;
 

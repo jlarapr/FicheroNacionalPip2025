@@ -1,4 +1,4 @@
-namespace FicheroNacionalPip.Business.Common;
+namespace FicheroNacionalPip.Common;
 
 /// <summary>
 /// Representa el resultado de una operación que puede ser exitosa con un valor de tipo TSuccess

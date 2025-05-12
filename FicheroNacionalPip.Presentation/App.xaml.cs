@@ -11,7 +11,10 @@ using FicheroNacionalPip.Presentation.Views;
 using FicheroNacionalPip.Presentation.Views.LeftMenu;
 using FicheroNacionalPip.Presentation.Views.RightMenu;
 using Serilog;
-using FicheroNacionalPip.Business.Common;
+using Microsoft.Extensions.Configuration;
+using FicheroNacionalPip.Business.Interfaces;
+using FicheroNacionalPip.Business.Services;
+using FicheroNacionalPip.Common;
 
 namespace FicheroNacionalPip.Presentation;
 
@@ -19,21 +22,34 @@ namespace FicheroNacionalPip.Presentation;
 /// Interaction logic for App.xaml
 /// </summary>
 public partial class App : Application {
-    private readonly ServiceProvider _serviceProvider;
+    private IConfiguration _configuration;
+    private ServiceProvider _serviceProvider;
 
     public App() {
-        Result<bool, string> initResult = InitializeLogger();
-        if (initResult.IsFailure)
+        try 
         {
-            MessageBox.Show($"Error al inicializar el sistema de logs: {initResult.GetErrorOrDefault()}", 
-                "Error de Inicialización", MessageBoxButton.OK, MessageBoxImage.Error);
-            Current.Shutdown();
-            return;
-        }
+            Result<bool, string> initResult = InitializeLogger();
+            if (initResult.IsFailure)
+            {
+                ShowFatalError($"Error al inicializar el sistema de logs: {initResult.GetErrorOrDefault() ?? "Error desconocido"}");
+                return;
+            }
 
-        var services = new ServiceCollection();
-        ConfigureServices(services);
-        _serviceProvider = services.BuildServiceProvider();
+            if (!ConfigureServices())
+            {
+                return; // El error ya ha sido mostrado en ConfigureServices
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowFatalError($"Error fatal durante la inicialización de la aplicación: {ex.Message}");
+        }
+    }
+
+    private void ShowFatalError(string message)
+    {
+        MessageBox.Show(message, "Error Fatal", MessageBoxButton.OK, MessageBoxImage.Error);
+        Current.Shutdown();
     }
 
     private Result<bool, string> InitializeLogger()
@@ -67,64 +83,184 @@ public partial class App : Application {
         }
     }
 
-    private void ConfigureServices(IServiceCollection services) {
-        // Configurar logging
-        services.AddLogging(builder => {
-            builder.ClearProviders();
-            builder.AddSerilog(dispose: true);
-        });
+    private bool ConfigureServices()
+    {
+        try
+        {
+            var basePath = AppDomain.CurrentDomain.BaseDirectory;
+            var environment = GetEnvironment();
 
-        // Registrar servicios
-        services.AddSingleton<IViewService, ViewService>();
-        services.AddSingleton<MainWindow>();
-        services.AddSingleton<MainBaseMainWindowViewModel>();
-        services.AddSingleton<BaseMainWindowsService>();
+            // Verificar la existencia de los archivos de configuración
+            var mainSettingsPath = Path.Combine(basePath, "appsettings.json");
+            var envSettingsPath = Path.Combine(basePath, $"appsettings.{environment}.json");
 
-        // Right Menu
-        services.AddSingleton<SettingWindow>();
-        services.AddSingleton<SettingViewModel>();
-        services.AddSingleton<AdminWindow>();
-        services.AddSingleton<AdminViewModel>();
-        services.AddSingleton<ChangePasswordWindow>();
-        services.AddSingleton<ChangePasswordViewModel>();
-        services.AddSingleton<HelpWindow>();
-        services.AddSingleton<HelpViewModel>();
-        services.AddSingleton<LoginWindow>();
-        services.AddSingleton<LoginViewModel>();
-        services.AddSingleton<LogoutWindow>();
-        services.AddSingleton<LogoutViewModel>();
+            if (!File.Exists(mainSettingsPath))
+            {
+                throw new FileNotFoundException(
+                    $"No se encontró el archivo de configuración principal en: {mainSettingsPath}");
+            }
 
-        // Left Menu
-        services.AddSingleton<HomeWindow>();
-        services.AddSingleton<HomeViewModel>();
-        services.AddSingleton<ListaWindow>();
-        services.AddSingleton<ListaViewModel>();
-        services.AddSingleton<MasterAfiliadosWindow>();
-        services.AddSingleton<MasterAfiliadosViewModel>();
-        services.AddSingleton<MasterCeeWindow>();
-        services.AddSingleton<MasterCeeViewModel>();
-        services.AddSingleton<MembretesWindow>();
-        services.AddSingleton<MembretesViewModel>();
+            // Configurar la configuración
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(basePath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-        services.AddSingleton<IDialogService, DialogService>();
-        services.AddSingleton(typeof(Lazy<>), typeof(LazyService<>));
+            // Solo agregar el archivo de ambiente si existe
+            if (File.Exists(envSettingsPath))
+            {
+                builder.AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true);
+            }
+            else
+            {
+                Log.Warning("No se encontró el archivo de configuración para el ambiente {Environment} en: {Path}", 
+                    environment, envSettingsPath);
+            }
+
+            builder.AddEnvironmentVariables();
+            _configuration = builder.Build();
+
+            // Verificar la sección DatabaseConfig
+            var dbConfig = _configuration.GetSection("DatabaseConfig");
+            if (!dbConfig.Exists())
+            {
+                throw new InvalidOperationException("La sección 'DatabaseConfig' no existe en la configuración.");
+            }
+
+            // Configurar la inyección de dependencias
+            var services = new ServiceCollection();
+            
+            // Configurar logging
+            services.AddLogging(builder => {
+                builder.ClearProviders();
+                builder.AddSerilog(dispose: true);
+            });
+            
+            // Registrar servicios
+            services.AddSingleton(_configuration);
+            services.AddSingleton<IDbConfigurationService, DbConfigurationService>();
+            services.AddSingleton<ApplicationInitializer>();
+
+            // Registrar servicios de la UI
+            services.AddSingleton<IViewService, ViewService>();
+            services.AddSingleton<IDialogService, DialogService>();
+            services.AddSingleton(typeof(Lazy<>), typeof(LazyService<>));
+
+            // Registrar MainWindow y su ViewModel
+            services.AddSingleton<MainWindow>();
+            services.AddSingleton<MainBaseMainWindowViewModel>();
+            services.AddSingleton<BaseMainWindowsService>();
+
+            // Registrar ventanas del menú derecho
+            services.AddSingleton<SettingWindow>();
+            services.AddSingleton<SettingViewModel>();
+            services.AddSingleton<AdminWindow>();
+            services.AddSingleton<AdminViewModel>();
+            services.AddSingleton<ChangePasswordWindow>();
+            services.AddSingleton<ChangePasswordViewModel>();
+            services.AddSingleton<HelpWindow>();
+            services.AddSingleton<HelpViewModel>();
+            services.AddSingleton<LoginWindow>();
+            services.AddSingleton<LoginViewModel>();
+            services.AddSingleton<LogoutWindow>();
+            services.AddSingleton<LogoutViewModel>();
+
+            // Registrar ventanas del menú izquierdo
+            services.AddSingleton<HomeWindow>();
+            services.AddSingleton<HomeViewModel>();
+            services.AddSingleton<ListaWindow>();
+            services.AddSingleton<ListaViewModel>();
+            services.AddSingleton<MasterAfiliadosWindow>();
+            services.AddSingleton<MasterAfiliadosViewModel>();
+            services.AddSingleton<MasterCeeWindow>();
+            services.AddSingleton<MasterCeeViewModel>();
+            services.AddSingleton<MembretesWindow>();
+            services.AddSingleton<MembretesViewModel>();
+
+            // Construir el contenedor de servicios
+            _serviceProvider = services.BuildServiceProvider();
+            
+            Log.Information("Servicios configurados correctamente");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            var errorMessage = "Error al configurar los servicios de la aplicación";
+            if (Log.Logger != null)
+            {
+                Log.Error(ex, errorMessage);
+            }
+            ShowFatalError($"{errorMessage}: {ex.Message}");
+            return false;
+        }
     }
 
-    protected override void OnStartup(StartupEventArgs e) {
+    protected override void OnStartup(StartupEventArgs e)
+    {
         try
         {
             base.OnStartup(e);
-            var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
-            mainWindow.Show();
+            Log.Information("Iniciando aplicación...");
+            
+            if (_serviceProvider == null)
+            {
+                throw new InvalidOperationException("El proveedor de servicios no está inicializado.");
+            }
+
+            var initResult = InitializeApplication();
+            if (initResult.IsFailure)
+            {
+                var errorMessage = initResult.GetErrorOrDefault() ?? "Error desconocido durante la inicialización";
+                Log.Error("Error de inicialización: {Error}", errorMessage);
+                ShowFatalError(errorMessage);
+                return;
+            }
+
             Log.Information("Aplicación iniciada correctamente");
         }
         catch (Exception ex)
         {
             Log.Fatal(ex, "Error fatal durante el inicio de la aplicación");
-            MessageBox.Show($"Error al iniciar la aplicación: {ex.Message}", 
-                "Error Fatal", MessageBoxButton.OK, MessageBoxImage.Error);
-            Current.Shutdown();
+            ShowFatalError($"Error fatal al iniciar la aplicación: {ex.Message}");
         }
+    }
+
+    private Result<bool, string> InitializeApplication()
+    {
+        try
+        {
+            if (_serviceProvider == null)
+            {
+                return Result<bool, string>.Fail("El proveedor de servicios no está inicializado.");
+            }
+
+            var initializer = _serviceProvider.GetRequiredService<ApplicationInitializer>();
+            var result = initializer.Initialize();
+            
+            if (result.IsFailure)
+            {
+                var errorMessage = result.GetErrorOrDefault() ?? "Error desconocido en la inicialización";
+                return Result<bool, string>.Fail(errorMessage);
+            }
+
+            // Inicializar y mostrar la ventana principal
+            MainWindow = _serviceProvider.GetRequiredService<MainWindow>();
+            MainWindow.Show();
+
+            return Result<bool, string>.Ok(true);
+        }
+        catch (Exception ex)
+        {
+            return Result<bool, string>.Fail($"Error inesperado al inicializar la aplicación: {ex.Message}");
+        }
+    }
+
+    private string GetEnvironment()
+    {
+        #if DEBUG
+            return "Development";
+        #else
+            return "Production";
+        #endif
     }
 
     protected override void OnExit(ExitEventArgs e) {
@@ -132,11 +268,17 @@ public partial class App : Application {
         {
             Log.Information("Aplicación cerrándose normalmente");
             Log.CloseAndFlush();
-            _serviceProvider.Dispose();
+            
+            if (_serviceProvider != null)
+            {
+                _serviceProvider.Dispose();
+            }
         }
         catch (Exception ex)
         {
             Log.Fatal(ex, "Error durante el cierre de la aplicación");
+            MessageBox.Show($"Error durante el cierre de la aplicación: {ex.Message}", 
+                "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
         finally
         {
