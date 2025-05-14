@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!-- Login Window -->
+    <system:String x:Key="Username">Usuario</system:String>
+    <system:String x:Key="Password">Contraseña</system:String>
+    <system:String x:Key="LoginButton">INICIAR SESIÓN</system:String>
+    <system:String x:Key="LoginError">Usuario o contraseña incorrectos</system:String>
+
+    <!-- Main Window -->
+    <system:String x:Key="AppTitle">Demo WPF</system:String>
+    <system:String x:Key="Home">Inicio</system:String>
+    <system:String x:Key="Users">Usuarios</system:String>
+    <system:String x:Key="Data">Datos</system:String>
+    <system:String x:Key="Reports">Reportes</system:String>
+    <system:String x:Key="Settings">Configuración</system:String>
+    <system:String x:Key="Language">Idioma</system:String>
+    <system:String x:Key="Theme">Tema</system:String>
+    <system:String x:Key="DarkTheme">Oscuro</system:String>
+    <system:String x:Key="LightTheme">Claro</system:String>
+
+    <!-- Messages -->
+    <system:String x:Key="Welcome">¡Bienvenido a la aplicación Demo WPF!</system:String>
+    <system:String x:Key="SaveSuccess">Guardado exitosamente</system:String>
+    <system:String x:Key="SaveError">Error al guardar</system:String>
+    <system:String x:Key="DeleteConfirm">¿Está seguro de eliminar este elemento?</system:String>
+    <system:String x:Key="Yes">Sí</system:String>
+    <system:String x:Key="No">No</system:String>
+    <system:String x:Key="Cancel">Cancelar</system:String>
+    <system:String x:Key="Logout">Cerrar Sesión</system:String>
+</ResourceDictionary>

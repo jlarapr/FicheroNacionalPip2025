@@ -101,9 +101,8 @@
         <!-- <Setter Property="Header" Value="{Binding DisplayName}" /> -->
         <Setter Property="Command" Value="{Binding Command}" />
         <Setter Property="CommandParameter" Value="{Binding}" />
+        <Setter Property="IsEnabled" Value="{Binding IsEnabled}" />
         <Setter Property="ItemsSource" Value="{Binding SubItems}" />
-
-
         <!-- </Style> -->
     </Style>
 

@@ -30,7 +30,6 @@ public class ViewService : IViewService
             "Change Password" => CreateFrameworkElement<ChangePasswordWindow>(),
             "Help" => CreateFrameworkElement<HelpWindow>(),
             "Login" => CreateFrameworkElement<LoginWindow>(),
-            "Logout" => CreateFrameworkElement<LogoutWindow>(),
             "Membretes" => CreateFrameworkElement<MembretesWindow>(),
             _ => throw new ArgumentException($"View {viewName} not found")
         };

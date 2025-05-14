@@ -97,4 +97,51 @@
 1. Implementar sistema de gestión de usuarios
 2. Agregar validaciones adicionales en modelo de usuario
 3. Configurar sistema de autenticación y autorización
-4. Implementar interfaz de usuario para gestión de usuarios 
+4. Implementar interfaz de usuario para gestión de usuarios
+
+## 2024-05-15 (6 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1.5 horas)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario 

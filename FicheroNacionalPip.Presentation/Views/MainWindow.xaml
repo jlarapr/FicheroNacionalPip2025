@@ -68,6 +68,7 @@
                                       <Button HorizontalContentAlignment="Stretch"
                                               Command="{Binding Command}"
                                               CommandParameter="{Binding}"
+                                              IsEnabled="{Binding Path=IsEnabled }"
                                               Height="60" HorizontalAlignment="Stretch" Background="Transparent"
                                               BorderBrush="Transparent">
                                           <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
