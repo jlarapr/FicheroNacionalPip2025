@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using FicheroNacionalPip.Presentation.Interfaces;
+using FicheroNacionalPip.Presentation.ViewModels.RightMenu;
 using FicheroNacionalPip.Presentation.Views.LeftMenu;
 using FicheroNacionalPip.Presentation.Views.RightMenu;
 using Microsoft.Extensions.DependencyInjection;

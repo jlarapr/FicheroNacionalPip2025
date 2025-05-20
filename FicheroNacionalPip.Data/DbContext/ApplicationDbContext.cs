@@ -15,15 +15,32 @@ namespace FicheroNacionalPip.Data.DbContext
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<PasswordPolicy> PasswordPolicies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            // Aplicar configuraciones
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new PasswordPolicyConfiguration());
             
             // Agregar datos semilla
             DefaultUserSeed.SeedDefaultUser(modelBuilder);
+            DefaultPasswordPolicySeed.SeedDefaultPasswordPolicy(modelBuilder);
+
+            // Configuración de índices únicos para User
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.UserId)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.UserName)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

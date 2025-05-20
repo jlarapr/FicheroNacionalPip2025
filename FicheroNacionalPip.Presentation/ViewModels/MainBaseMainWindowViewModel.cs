@@ -30,7 +30,6 @@ public partial class MainBaseMainWindowViewModel : BaseMainWindowsService {
 
     public ObservableCollection<MenuItemModel>? MenuItems { get; set; }
     public ObservableCollection<MenuItemModel>? RightMenuItems { get; set; }
-
     public MainBaseMainWindowViewModel(IViewService viewService, ILogger<BaseMainWindows> logger, LoginViewModel loginViewModel,
         IAuthenticationService authService) : base(logger) {
         _viewService = viewService;

@@ -84,7 +84,6 @@
 
     <ItemGroup>
       <Folder Include="DbContext\" />
-      <Folder Include="Models\" />
     </ItemGroup>
 
     <ItemGroup>

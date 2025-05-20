@@ -4,6 +4,7 @@ using FicheroNacionalPip.Data.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FicheroNacionalPip.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250519145717_AddPasswordPolicyTable")]
+    partial class AddPasswordPolicyTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,54 +34,32 @@ namespace FicheroNacionalPip.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2")
-                        .HasComment("Fecha de creación");
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit")
-                        .HasComment("Indica si la política está activa");
+                        .HasColumnType("bit");
 
                     b.Property<int>("MaxPasswordAge")
-                        .HasColumnType("int")
-                        .HasComment("Edad máxima de la contraseña en días");
+                        .HasColumnType("int");
 
                     b.Property<int>("MinPasswordLength")
-                        .HasColumnType("int")
-                        .HasComment("Longitud mínima de la contraseña");
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime2")
-                        .HasComment("Fecha de última modificación");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("RequiredNonAlphanumeric")
-                        .HasColumnType("int")
-                        .HasComment("Cantidad de caracteres especiales requeridos");
+                        .HasColumnType("int");
 
                     b.Property<int>("RequiredNumbers")
-                        .HasColumnType("int")
-                        .HasComment("Cantidad de números requeridos");
+                        .HasColumnType("int");
 
                     b.Property<int>("RequiredUppercase")
-                        .HasColumnType("int")
-                        .HasComment("Cantidad de mayúsculas requeridas");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("PasswordPolicies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsActive = true,
-                            MaxPasswordAge = 90,
-                            MinPasswordLength = 8,
-                            ModifiedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RequiredNonAlphanumeric = 1,
-                            RequiredNumbers = 1,
-                            RequiredUppercase = 1
-                        });
                 });
 
             modelBuilder.Entity("FicheroNacionalPip.Data.Models.User", b =>

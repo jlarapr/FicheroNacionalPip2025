@@ -29,10 +29,11 @@ public partial class LoginViewModel : ObservableObject {
 
     public LoginViewModel(
         IAuthenticationService authService,
-        ILogger<LoginViewModel> logger,IViewService viewService) {
+        ILogger<LoginViewModel> logger,
+        IViewService viewService) {
         _authService = authService ?? throw new ArgumentNullException(nameof(authService));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-         _viewService = viewService ?? throw new ArgumentNullException(nameof(viewService));
+        _viewService = viewService ?? throw new ArgumentNullException(nameof(viewService));
 
         MyTitle = "Login";
         PasswordIcon = PackIconKind.EyeOffOutline;

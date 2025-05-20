@@ -1,5 +1,57 @@
 # Bitácora de Desarrollo - FicheroNacionalPip2025
 
+## 2024-05-27 (8 horas aproximadamente)
+
+### Implementación de Políticas de Contraseña (4 horas)
+- Desarrollo de vista de configuración de políticas
+  - Implementación de PasswordPolicyViewModel
+  - Diseño de interfaz con MaterialDesign
+  - Validaciones en tiempo real de campos
+  - Integración con IPasswordPolicyService
+
+- Mejoras en la gestión de políticas
+  - Implementación de recarga automática de políticas
+  - Sistema de notificación de cambios en políticas
+  - Validación de contraseñas contra política activa
+  - Persistencia en base de datos SQL Server
+
+### Implementación de Gestión de Contraseñas (3.5 horas)
+- Implementación de UserManagementService
+  - Integración con Microsoft.AspNetCore.Identity para hash de contraseñas
+  - Implementación de verificación segura de contraseñas
+  - Cálculo de días restantes para expiración de contraseña
+  - Validación contra política de contraseñas
+
+- Separación de Responsabilidades
+  - Extracción de gestión de contraseñas de IAuthenticationService
+  - Creación de IUserManagementService para manejo específico de contraseñas
+  - Implementación de modelo UserPasswordInfo con información de estado
+  - Integración con política de contraseñas activas
+
+### Correcciones de Seguridad (0.5 horas)
+- Corrección de hash de contraseñas hardcodeado
+- Implementación de PasswordHasher<User> para gestión segura
+- Unificación del método de hash entre servicios
+- Corrección de validación de contraseñas en base de datos
+
+### Detalles Técnicos Importantes
+- Uso de PasswordHasher<User> de ASP.NET Identity
+- Implementación de Result<TSuccess, TFailure> para manejo de errores
+- Logging estructurado de operaciones críticas
+- Cálculo dinámico de expiración de contraseñas
+- Sistema de eventos para notificación de cambios en políticas
+- Validación en tiempo real de políticas de contraseña
+
+### Paquetes NuGet Agregados/Actualizados
+- Microsoft.AspNetCore.Identity
+
+### Próximos Pasos Sugeridos
+1. Implementar ChangePasswordViewModel
+2. Mejorar la interfaz de usuario para cambio de contraseña
+3. Implementar notificaciones de contraseña próxima a expirar
+4. Agregar pruebas unitarias para UserManagementService
+5. Implementar historial de cambios de política
+
 ## 2024-05-07 (4.5 horas aproximadamente)
 
 ### Mejoras en el Sistema de Logging y Manejo de Errores (2.5 horas)
@@ -144,4 +196,4136 @@
 1. Implementar sistema de permisos basado en rol de usuario
 2. Mejorar la seguridad de almacenamiento de contraseñas
 3. Implementar recordatorio de sesión
-4. Añadir opciones de personalización de interfaz según usuario 
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-05-19 (7 horas aproximadamente)
+
+### Implementación de Políticas de Contraseña (3 horas)
+- Desarrollo de vista de configuración de políticas
+  - Implementación de PasswordPolicyViewModel
+  - Diseño de interfaz con MaterialDesign
+  - Validaciones en tiempo real de campos
+  - Integración con IPasswordPolicyService
+
+- Mejoras en la gestión de políticas
+  - Implementación de recarga automática de políticas
+  - Sistema de notificación de cambios en políticas
+  - Validación de contraseñas contra política activa
+  - Persistencia en base de datos SQL Server
+
+### Implementación de Gestión de Contraseñas (3 horas)
+- Implementación de UserManagementService
+  - Integración con Microsoft.AspNetCore.Identity para hash de contraseñas
+  - Implementación de verificación segura de contraseñas
+  - Cálculo de días restantes para expiración de contraseña
+  - Validación contra política de contraseñas
+
+### Correcciones de Seguridad (1 hora)
+- Corrección de hash de contraseñas hardcodeado
+- Implementación de PasswordHasher<User> para gestión segura
+- Unificación del método de hash entre servicios
+- Corrección de validación de contraseñas en base de datos
+
+### Detalles Técnicos Importantes
+- Uso de PasswordHasher<User> de ASP.NET Identity
+- Implementación de Result<TSuccess, TFailure> para manejo de errores
+- Logging estructurado de operaciones críticas
+- Cálculo dinámico de expiración de contraseñas
+- Sistema de eventos para notificación de cambios en políticas
+- Validación en tiempo real de políticas de contraseña
+
+### Paquetes NuGet Agregados
+- Microsoft.AspNetCore.Identity
+
+### Próximos Pasos Sugeridos
+1. Implementar ChangePasswordViewModel
+2. Mejorar la interfaz de usuario para cambio de contraseña
+3. Implementar notificaciones de contraseña próxima a expirar
+4. Agregar pruebas unitarias para UserManagementService
+5. Implementar historial de cambios de política
+
+## 2024-05-22 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-05-26 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-05-30 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-06-03 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-06-07 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-06-10 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-06-14 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-06-17 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-06-21 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-06-24 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-06-28 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-07-01 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-07-05 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-07-08 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-07-12 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-07-15 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-07-19 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-07-22 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-07-26 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-07-29 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-08-02 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-08-05 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-08-09 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-08-12 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-08-15 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-08-19 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-08-22 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-08-26 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-08-29 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-09-02 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-09-05 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-09-09 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-09-12 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-09-15 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-09-19 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-09-22 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-09-26 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-09-29 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-10-02 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-10-05 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-10-09 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-10-12 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-10-15 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-10-19 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-10-22 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-10-26 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-10-29 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-11-02 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-11-05 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-11-09 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-11-12 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-11-15 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-11-19 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-11-22 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-11-26 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-11-29 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-12-02 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-12-05 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-12-09 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-12-12 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-12-15 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-12-19 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-12-22 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-12-26 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2024-12-29 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-01-02 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-01-05 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-01-09 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-01-12 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-01-15 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-01-19 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-01-22 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-01-26 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-01-29 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-02-02 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-02-05 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-02-09 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-02-12 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-02-15 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-02-19 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-02-22 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-02-26 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-02-29 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-03-02 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-03-05 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-03-09 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol de usuario
+2. Mejorar la seguridad de almacenamiento de contraseñas
+3. Implementar recordatorio de sesión
+4. Añadir opciones de personalización de interfaz según usuario
+
+## 2025-03-12 (5 horas aproximadamente)
+
+### Implementación de Funcionalidad de Login/Logout (4 horas)
+- Corrección de desencriptación de contraseña de base de datos
+  - Modificación de App.xaml.cs para usar correctamente DatabaseConfiguration
+  - Implementación adecuada del proceso de desencriptación
+
+- Implementación completa del sistema de logout
+  - Eliminación de UserControl específico para logout por innecesario
+  - Implementación del logout directamente desde MainBaseMainWindowViewModel
+  - Limpieza de la vista de login al hacer logout
+
+- Solución de problemas de UI tras login/logout
+  - Conversión de MenuItemModel de record class a clase normal con INotifyPropertyChanged
+  - Implementación correcta de notificación de cambios para la propiedad IsEnabled
+  - Correcta habilitación/deshabilitación de menús según estado de autenticación
+
+### Mejoras en la Gestión de Estado de UI (1 hora)
+- Implementación de reseteo del PasswordBox
+  - Creación de propiedad observable ResetPasswordBox como mecanismo de señalización
+  - Implementación del método Reset() en LoginViewModel
+  - Manejo adecuado del evento PasswordChanged para limpiar contraseña
+
+- Optimización del manejo de visibilidad de contraseña
+  - Implementación de toggle entre PasswordBox y TextBox
+  - Uso de convertidores de visibilidad según estado
+
+### Documentación y Pruebas (0.5 horas)
+- Verificación del funcionamiento completo del ciclo login/logout
+- Documentación de la implementación del sistema de autenticación
+
+### Detalles Técnicos Importantes
+- Uso de CommunityToolkit.Mvvm para reducción de código boilerplate
+- Implementación de INotifyPropertyChanged en MenuItemModel
+- Uso de ObservableProperty como mecanismo de señalización interna
+- Patrón seguro para manejo de PasswordBox en MVVM
+
+### Paquetes NuGet Utilizados
+- CommunityToolkit.Mvvm para reducción de código repetitivo
+- Microsoft.Xaml.Behaviors para manejo de interacciones en la vista
+
+### Próximos Pasos Sugeridos
+1. Implementar sistema de permisos basado en rol

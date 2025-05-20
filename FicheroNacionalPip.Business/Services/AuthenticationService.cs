@@ -1,8 +1,10 @@
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Identity;
 using FicheroNacionalPip.Business.Interfaces;
 using FicheroNacionalPip.Business.Models;
 using FicheroNacionalPip.Common;
 using FicheroNacionalPip.Data.DbContext;
+using FicheroNacionalPip.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -12,12 +14,14 @@ namespace FicheroNacionalPip.Business.Services
     {
         private readonly IDbContextFactory<ApplicationDbContext> _dbContextFactory;
         private readonly ILogger<AuthenticationService> _logger;
+        private readonly PasswordHasher<User> _passwordHasher;
         private UserAuthInfo? _currentUser;
 
         public AuthenticationService(IDbContextFactory<ApplicationDbContext> dbContextFactory, ILogger<AuthenticationService> logger)
         {
             _dbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _passwordHasher = new PasswordHasher<User>();
         }
 
         public Result<UserAuthInfo, string> Authenticate(string username, string password)
@@ -118,26 +122,18 @@ namespace FicheroNacionalPip.Business.Services
         // Método para verificar el hash de la contraseña (compatible con ASP.NET Identity)
         private bool VerifyPasswordHash(string password, string storedHash)
         {
-            // Este es un método simplificado para verificar contraseñas hasheadas con ASP.NET Identity
-            // En una implementación real, deberías usar la clase PasswordHasher de ASP.NET Identity
-            
             try
             {
-                // Implementación básica para demostración
-                // En producción, deberías usar Microsoft.AspNetCore.Identity.PasswordHasher
-                
-                // Por ahora, para pruebas, verificamos si la contraseña es "Admin123!" y el hash es el del usuario semilla
-                if (password == "Admin123!" && 
-                    storedHash == "AQAAAAIAAYagAAAAELbVqNJnC3Dw0v2Rzf8J0Xr8qQBfVBHzXmXZqhJeVxOtUXD+ZWGdPMK6GQpGXtGJrw==")
-                {
-                    return true;
-                }
-                
-                // Aquí iría la implementación real de verificación de hash
-                // Por ejemplo:
-                // return _passwordHasher.VerifyHashedPassword(null, storedHash, password) != PasswordVerificationResult.Failed;
-                
-                return false;
+                var user = new User();
+
+                // // Generar nuevo hash para comparar
+                // var tempUser = new User();
+                // var newHash = _passwordHasher.HashPassword(tempUser, password);
+                // _logger.LogInformation("Nuevo hash generado: {NewHash}", newHash);
+
+                var result = _passwordHasher.VerifyHashedPassword(user, storedHash, password);
+                _logger.LogInformation("Resultado de verificación: {Result}", result);
+                return result != PasswordVerificationResult.Failed;
             }
             catch (Exception ex)
             {
