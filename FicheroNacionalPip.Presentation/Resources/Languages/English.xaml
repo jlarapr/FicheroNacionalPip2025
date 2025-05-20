@@ -29,4 +29,7 @@
     <system:String x:Key="No">No</system:String>
     <system:String x:Key="Cancel">Cancel</system:String>
     <system:String x:Key="Logout">Logout</system:String>
+
+    <system:String x:Key="Save">Save</system:String>
+    <system:String x:Key="PasswordVerification">Password verification</system:String>
 </ResourceDictionary>

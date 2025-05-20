@@ -161,6 +161,9 @@ public partial class App : Application {
 
             // Registrar servicio de política de contraseñas
             services.AddScoped<IPasswordPolicyService, PasswordPolicyService>();
+            
+            // Registrar servicio de gestión de usuarios
+            services.AddScoped<IUserManagementService, UserManagementService>();
 
             // Registrar servicios de la UI
             services.AddSingleton<IViewService, ViewService>();
@@ -176,8 +179,7 @@ public partial class App : Application {
             
             services.AddSingleton<AdminWindow>();
             services.AddSingleton<AdminViewModel>();
-            services.AddSingleton<ChangePasswordWindow>();
-            services.AddSingleton<ChangePasswordViewModel>();
+
             services.AddSingleton<HelpWindow>();
             services.AddSingleton<HelpViewModel>();
             services.AddSingleton<LoginWindow>();
@@ -186,6 +188,8 @@ public partial class App : Application {
             // Registrar SettingViewModel y SettingWindow como transitorio para obtener nueva instancia cada vez
             services.AddTransient<SettingViewModel>();
             services.AddTransient<SettingWindow>();
+            services.AddTransient<ChangePasswordWindow>();
+            services.AddTransient<ChangePasswordViewModel>();
             
             // Registrar ventanas del menú izquierdo
             services.AddSingleton<HomeWindow>();

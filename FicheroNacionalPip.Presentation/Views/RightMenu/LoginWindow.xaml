@@ -8,7 +8,7 @@
              xmlns:infrastructure="clr-namespace:FicheroNacionalPip.Presentation.Infrastructure"
              mc:Ignorable="d"
              Height="500" Width="500" xmlns:rightMenu="clr-namespace:FicheroNacionalPip.Presentation.ViewModels.RightMenu"
-             d:DataContext="{d:DesignInstance Type=rightMenu:LoginViewModel, IsDesignTimeCreatable=True}">
+             d:DataContext="{d:DesignInstance Type=rightMenu:LoginViewModel}">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -20,8 +20,6 @@
             <infrastructure:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
-
-
        <Grid>
        <Grid.RowDefinitions>
            <RowDefinition Height="30"/>

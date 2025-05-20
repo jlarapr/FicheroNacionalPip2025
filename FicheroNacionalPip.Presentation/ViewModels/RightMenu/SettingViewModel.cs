@@ -308,17 +308,17 @@ public partial class SettingViewModel : ObservableObject
 
             _logger.LogInformation("Cargando política de contraseñas");
 
-            var result = await _policyService.GetActivePasswordPolicyAsync();
+        var result = await _policyService.GetActivePasswordPolicyAsync();
             if (result.IsSuccess)
             {
                 PasswordPolicyDto? policy = result.GetValueOrDefault();
 
                 // Actualizar valores actuales
-                MaxPasswordAge = policy.MaxPasswordAge;
-                MinPasswordLength = policy.MinPasswordLength;
-                RequiredNumbers = policy.RequiredNumbers;
-                RequiredNonAlphanumeric = policy.RequiredNonAlphanumeric;
-                RequiredUppercase = policy.RequiredUppercase;
+            MaxPasswordAge = policy.MaxPasswordAge;
+            MinPasswordLength = policy.MinPasswordLength;
+            RequiredNumbers = policy.RequiredNumbers;
+            RequiredNonAlphanumeric = policy.RequiredNonAlphanumeric;
+            RequiredUppercase = policy.RequiredUppercase;
 
                 // Guardar valores originales
                 _originalMaxPasswordAge = policy.MaxPasswordAge;
@@ -358,12 +358,12 @@ public partial class SettingViewModel : ObservableObject
 
             var policy = new PasswordPolicyDto
             {
-                MaxPasswordAge = MaxPasswordAge,
-                MinPasswordLength = MinPasswordLength,
-                RequiredNumbers = RequiredNumbers,
-                RequiredNonAlphanumeric = RequiredNonAlphanumeric,
-                RequiredUppercase = RequiredUppercase
-            };
+            MaxPasswordAge = MaxPasswordAge,
+            MinPasswordLength = MinPasswordLength,
+            RequiredNumbers = RequiredNumbers,
+            RequiredNonAlphanumeric = RequiredNonAlphanumeric,
+            RequiredUppercase = RequiredUppercase
+        };
 
             var result = await _policyService.UpdatePasswordPolicyAsync(policy);
             if (result.IsSuccess)

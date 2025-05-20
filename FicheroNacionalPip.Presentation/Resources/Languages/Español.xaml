@@ -29,4 +29,8 @@
     <system:String x:Key="No">No</system:String>
     <system:String x:Key="Cancel">Cancelar</system:String>
     <system:String x:Key="Logout">Cerrar Sesión</system:String>
+
+
+    <system:String x:Key="Save">Guardar</system:String>
+    <system:String x:Key="PasswordVerification">Verificación de contraseña</system:String>
 </ResourceDictionary>
