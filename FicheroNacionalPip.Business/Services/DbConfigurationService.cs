@@ -3,7 +3,6 @@ using FicheroNacionalPip.Data.Configuration;
 using FicheroNacionalPip.Common;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using System.Data;
 using System.Text.RegularExpressions;
 
 namespace FicheroNacionalPip.Business.Services
@@ -14,12 +13,12 @@ namespace FicheroNacionalPip.Business.Services
 
         public DbConfigurationService()
         {
-            var configBuilder = new ConfigurationBuilder()
+            IConfigurationBuilder configBuilder = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                 .AddJsonFile("appsettings.Development.json", optional: false);
 
-            var config = configBuilder.Build();
-            var dbConfig = config.GetSection("DatabaseConfig");
+            IConfigurationRoot config = configBuilder.Build();
+            IConfigurationSection  dbConfig = config.GetSection("DatabaseConfig");
 
             _configuration = new DatabaseConfiguration
             {
@@ -49,11 +48,11 @@ namespace FicheroNacionalPip.Business.Services
         {
             try
             {
-                var connectionStringResult = GetConnectionString();
+                Result<string, string> connectionStringResult = GetConnectionString();
                 if (connectionStringResult.IsFailure)
-                    return Result<bool, string>.Fail(connectionStringResult.GetErrorOrDefault());
+                    return Result<bool, string>.Fail(connectionStringResult.GetErrorOrDefault() ?? "Unknown error");
 
-                var connectionString = connectionStringResult.GetValueOrDefault();
+                string? connectionString = connectionStringResult.GetValueOrDefault();
                 Console.WriteLine($"\nIntentando conectar con la siguiente configuración:");
                 Console.WriteLine($"Servidor: {_configuration.Server}");
                 Console.WriteLine($"Base de datos: {_configuration.Database}");
@@ -63,33 +62,31 @@ namespace FicheroNacionalPip.Business.Services
                 Console.WriteLine($"TrustServerCertificate: {_configuration.TrustServerCertificate}\n");
 
                 // Extraer y ocultar la contraseña de la cadena de conexión
-                var maskedConnectionString = connectionString;
+                string? maskedConnectionString = connectionString;
                 var passwordPattern = @"Password=([^;]+)";
                 maskedConnectionString = Regex.Replace(
-                    maskedConnectionString,
+                    maskedConnectionString ?? "" ,
                     passwordPattern,
                     "Password=********"
                 );
                 Console.WriteLine($"Cadena de conexión: {maskedConnectionString}\n");
 
-                using (var connection = new SqlConnection(connectionString))
+                using var connection = new SqlConnection(connectionString);
+                try
                 {
-                    try
-                    {
-                        connection.Open();
-                        Console.WriteLine("Conexión exitosa a la base de datos.");
-                        return Result<bool, string>.Ok(true);
-                    }
-                    catch (SqlException ex)
-                    {
-                        var error = $"Error de SQL al probar la conexión: {ex.Message}\n" +
-                                  $"Número de error: {ex.Number}\n" +
-                                  $"Estado: {ex.State}\n" +
-                                  $"Procedimiento: {ex.Procedure}\n" +
-                                  $"Línea: {ex.LineNumber}\n" +
-                                  $"Servidor: {ex.Server}";
-                        return Result<bool, string>.Fail(error);
-                    }
+                    connection.Open();
+                    Console.WriteLine("Conexión exitosa a la base de datos.");
+                    return Result<bool, string>.Ok(true);
+                }
+                catch (SqlException ex)
+                {
+                    string error = $"Error de SQL al probar la conexión: {ex.Message}\n" +
+                                   $"Número de error: {ex.Number}\n" +
+                                   $"Estado: {ex.State}\n" +
+                                   $"Procedimiento: {ex.Procedure}\n" +
+                                   $"Línea: {ex.LineNumber}\n" +
+                                   $"Servidor: {ex.Server}";
+                    return Result<bool, string>.Fail(error);
                 }
             }
             catch (Exception ex)

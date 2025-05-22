@@ -9,30 +9,23 @@ using FicheroNacionalPip.Data.Models;
 
 namespace FicheroNacionalPip.Business.Services;
 
-public class UserManagementService : IUserManagementService
-{
-    private readonly IDbContextFactory<ApplicationDbContext> _dbContextFactory;
-    private readonly IPasswordPolicyService _policyService;
-    private readonly ILogger<UserManagementService> _logger;
-    private readonly PasswordHasher<User> _passwordHasher;
+public class UserManagementService(
+    IDbContextFactory<ApplicationDbContext> dbContextFactory,
+    IPasswordPolicyService policyService,
+    ILogger<UserManagementService> logger)
+    : IUserManagementService {
 
-    public UserManagementService(
-        IDbContextFactory<ApplicationDbContext> dbContextFactory,
-        IPasswordPolicyService policyService,
-        ILogger<UserManagementService> logger)
-    {
-        _dbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
-        _policyService = policyService ?? throw new ArgumentNullException(nameof(policyService));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        _passwordHasher = new PasswordHasher<User>();
-    }
+    private readonly IDbContextFactory<ApplicationDbContext> _dbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
+    private readonly IPasswordPolicyService _policyService = policyService ?? throw new ArgumentNullException(nameof(policyService));
+    private readonly ILogger<UserManagementService> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    private readonly PasswordHasher<User> _passwordHasher = new();
 
     public async Task<Result<bool, string>> ValidatePasswordAsync(string username, string currentPassword)
     {
         try
         {
-            using var context = await _dbContextFactory.CreateDbContextAsync();
-            var user = await context.Users
+            await using ApplicationDbContext context = await _dbContextFactory.CreateDbContextAsync();
+            User? user = await context.Users
                 .FirstOrDefaultAsync(u => u.UserName.ToLower() == username.ToLower());
 
             if (user == null)
@@ -61,21 +54,21 @@ public class UserManagementService : IUserManagementService
         try
         {
             // Validar contraseña actual
-            var validationResult = await ValidatePasswordAsync(username, currentPassword);
+            Result<bool, string> validationResult = await ValidatePasswordAsync(username, currentPassword);
             if (!validationResult.IsSuccess)
             {
                 return validationResult;
             }
 
             // Validar nueva contraseña contra política
-            var policyResult = await _policyService.ValidatePasswordAsync(newPassword);
+            Result<bool, string> policyResult = await _policyService.ValidatePasswordAsync(newPassword);
             if (!policyResult.IsSuccess)
             {
-                return Result<bool, string>.Fail(policyResult.GetErrorOrDefault());
+                return Result<bool, string>.Fail(policyResult.GetErrorOrDefault() ?? "Unknown error");
             }
 
-            using var context = await _dbContextFactory.CreateDbContextAsync();
-            var user = await context.Users
+            await using ApplicationDbContext context = await _dbContextFactory.CreateDbContextAsync();
+            User? user = await context.Users
                 .FirstOrDefaultAsync(u => u.UserName.ToLower() == username.ToLower());
 
             if (user == null)
@@ -104,8 +97,8 @@ public class UserManagementService : IUserManagementService
     {
         try
         {
-            using var context = await _dbContextFactory.CreateDbContextAsync();
-            var user = await context.Users
+            await using ApplicationDbContext context = await _dbContextFactory.CreateDbContextAsync();
+            User? user = await context.Users
                 .FirstOrDefaultAsync(u => u.UserName.ToLower() == username.ToLower());
 
             if (user == null)
@@ -113,13 +106,13 @@ public class UserManagementService : IUserManagementService
                 return Result<UserPasswordInfo, string>.Fail("Usuario no encontrado");
             }
 
-            var policyResult = await _policyService.GetActivePasswordPolicyAsync();
+            Result<PasswordPolicyDto, string> policyResult = await _policyService.GetActivePasswordPolicyAsync();
             if (policyResult.IsFailure)
             {
-                return Result<UserPasswordInfo, string>.Fail(policyResult.GetErrorOrDefault());
+                return Result<UserPasswordInfo, string>.Fail(policyResult.GetErrorOrDefault() ??  "Unknown error");
             }
 
-            var policy = policyResult.GetValueOrDefault();
+            PasswordPolicyDto? policy = policyResult.GetValueOrDefault();
             var info = new UserPasswordInfo
             {
                 LastChanged = DateTime.TryParse(user.StampDatePassword, out var date) ? date : null,
@@ -131,8 +124,8 @@ public class UserManagementService : IUserManagementService
             // Calcular días hasta expiración
             if (info.LastChanged.HasValue)
             {
-                var daysOld = (DateTime.UtcNow - info.LastChanged.Value).TotalDays;
-                info.DaysUntilExpiration = Math.Max(0, policy.MaxPasswordAge - (int)daysOld);
+                double daysOld = (DateTime.UtcNow - info.LastChanged.Value).TotalDays;
+                info.DaysUntilExpiration = Math.Max(0, policy?.MaxPasswordAge - (int)daysOld ?? 0);
             }
             else
             {

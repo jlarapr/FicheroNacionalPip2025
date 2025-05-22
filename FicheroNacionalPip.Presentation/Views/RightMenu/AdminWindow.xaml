@@ -4,267 +4,235 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:infrastructure="clr-namespace:FicheroNacionalPip.Presentation.Infrastructure"
              xmlns:rightMenu="clr-namespace:FicheroNacionalPip.Presentation.ViewModels.RightMenu"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=rightMenu:AdminViewModel, IsDesignTimeCreatable=True}"
-             Width="800" Height="500">
+             Width="800" Height="800">
 
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Dictionary/DictionaryWindow.xaml" />
+                <ResourceDictionary Source="../Dictionary/DictionaryLoginWindow.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <infrastructure:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
+            <infrastructure:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
-
-
-    <Grid Margin="0,0,0,0">
-        <Border Margin="10" Padding="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Beige" BorderBrush="Black" BorderThickness="5" CornerRadius="10">
+    <Grid Cursor="Hand" Background="Transparent" >
+        <Border BorderBrush="Black" Background="Beige" HorizontalAlignment="Stretch" Padding="4" BorderThickness="3" CornerRadius="10" Margin="0">
             <Border.Effect>
-                <DropShadowEffect
-                Opacity="80"
-                ShadowDepth="16"
-                Color="Gray" />
+                <DropShadowEffect Color="Gray" Opacity="80" ShadowDepth="16"></DropShadowEffect>
             </Border.Effect>
-            <Grid Margin="1">
-                <Label x:Name="label" Width="67" Height="25" Margin="10,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Users:" FontSize="12" FontWeight="Bold" />
-                <ComboBox x:Name="CbxUsers"
-                          ItemsSource="{Binding CbxUsers,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                          SelectedIndex ="{Binding CbxUsersSelectedIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                          SelectedItem ="{Binding CbxUsersSelectedItem,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                          IsEnabled="{Binding CbxUsersIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                          Visibility="{Binding CbxUsersVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                          TabIndex="0"
-                          Width="355"
-                          Height="22"
-                          Margin="10,33,0,0"
-                          HorizontalAlignment="Left"
-                          VerticalAlignment="Top" />
-                <Label
-                x:Name="label_Copy"
-                Width="187"
-                Height="24"
-                Margin="11,69,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Content="Password:"
-                FontSize="12"
-                FontWeight="Bold" />
-                <TextBox x:Name="TxtVisiblePasswordbox" 
-                     Text="{Binding TxtVisiblePasswordbox,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                     Visibility="{Binding TxtVisiblePasswordboxVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                     MaxLength="20" IsReadOnly="True" Height="21" TextWrapping="NoWrap"  
-                     FontSize="12" Padding="5,2,47,0" HorizontalAlignment="Left" Margin="10,93,0,0"  
-                     VerticalAlignment="Top" Width="365" />
-                <PasswordBox
-                x:Name="PbxPassword"
-                PasswordChar="*"
-                IsEnabled="{Binding PbxPasswordIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                Visibility="{Binding PbxPasswordVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                TabIndex="1"
-                Width="365"
-                Height="21"
-                Margin="10,93,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"  />
-                <TextBox Height="21" x:Name="TxtVisiblePasswordboxVeri" 
-                     Text="{Binding TxtVisiblePasswordboxVeri,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                     Visibility="{Binding TxtVisiblePasswordboxVeriVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                     TextWrapping="NoWrap"  FontSize="12" Padding="5,2,47,0" HorizontalAlignment="Left" 
-                     Margin="10,143,0,0"  VerticalAlignment="Top" Width="365" />
-                <PasswordBox
-                x:Name="PbxPasswordVerif"
-                PasswordChar="*"
-                IsEnabled="{Binding PbxPasswordVerifIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                Visibility="{Binding PbxPasswordVerifVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                TabIndex="2"
-                Width="365"
-                Height="21"
-                Margin="10,143,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,331" Height="119" Width="237"   >
-                    <materialDesign:PackIcon Kind="UserAdd" Height="106" Width="227"  Foreground="Green" Margin="0,3,0,0" />
-                </Grid>
-
-                <Label
-                x:Name="lbl"
-                Width="187"
-                Height="24"
-                Margin="10,117,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Content="Password Verification:"
-                FontSize="12"
-                FontWeight="Bold" />
-                <GroupBox x:Name="groupBox"
-                          Width="271"
-                          Height="186"
-                          HorizontalAlignment="Left"
-                          VerticalAlignment="Top" Foreground="Green"
-                          Header="Access Area" Margin="0,231,0,0" >
-                    <Grid Margin="2">
-                        <CheckBox
-                        x:Name="CkbCPassword"
-                        IsChecked="{Binding CkbCPasswordIsChecked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                        IsEnabled="{Binding CkbCPasswordIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                        Margin="10,10,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Content="Change Password" />
-                        <CheckBox
-                        x:Name="CkbAdmin"
-                        IsChecked="{Binding CkbAdminIsChecked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                        IsEnabled="{Binding CkbAdminIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                        Margin="10,30,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Content="Maintenance" />
-                        <CheckBox
-                        x:Name="CkbReportes"
-                        IsChecked="{Binding CkbReportesIsChecked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                        IsEnabled="{Binding CkbReportesIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                        Margin="10,50,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Content="Reports" />
-                        <CheckBox
-                        x:Name="CkbImgSearch"
-                        IsChecked="{Binding CkbImgSearchIsChecked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                        IsEnabled="{Binding CkbImgSearchIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                        Margin="10,70,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Content="Search" />
-                        <CheckBox
-                        x:Name="CkbSettings"
-                        IsChecked="{Binding CkbSettingsIsChecked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                        IsEnabled="{Binding CkbSettingsIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                        Margin="10,91,0,0"
-                        HorizontalAlignment="Left"
-                        Content="Settings" Height="19" VerticalAlignment="Top" />
+                <Grid Grid.Row="1" Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto" MinHeight="311"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="{Binding MyTitle}" VerticalAlignment="Center" Height="60" FontWeight="Bold" FontSize="25" Margin="10,0,209,0"/>
+                    <Grid Grid.Row="0" HorizontalAlignment="Right" Height="70" Margin="0,10,10,0" VerticalAlignment="Top" Width="100" >
+                        <materialDesign:PackIcon Kind="UserAdd" Foreground="Green" Margin="0" Height="70" Width="95" />
                     </Grid>
-                </GroupBox>
-                <Button x:Name="BtnAdd"
-                Command="{Binding BtnAdd}"
-                IsEnabled="{Binding BtnAddIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                Foreground ="{Binding BtnAddForeground,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                Width="NaN"
-                Margin="276,242,10,0"
-                VerticalAlignment="Top"
-                Content="Add" Height="25" RenderTransformOrigin="0.5,0.5"   >
-                    
-                </Button>
-                <Button x:Name="BtnEdit"
-                        Command="{Binding BtnEdit}"
-                        IsEnabled="{Binding BtnEditIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                        Foreground ="{Binding BtnEditForeground,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                        Height="25"
-                        Margin="276,302,10,0"
-                        VerticalAlignment="Top" 
-                        Content="Edit" Width="NaN"  />
-                <Button
-                x:Name="BtnDelete"
-                Command="{Binding BtnDelete}"
-                IsEnabled="{Binding BtnDeleteIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                Foreground ="{Binding BtnDeleteForeground,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                Margin="276,333,10,0"
-                Content="Delete" Height="25" Width="NaN" VerticalAlignment="Top" />
-                <Button
-                x:Name="BtnSave"
-                Command="{Binding BtnSave}"
-                IsEnabled="{Binding BtnSaveIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                Foreground ="{Binding BtnSaveForeground,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                Margin="276,362,10,0"
-                Content="Save" Height="25" VerticalAlignment="Top" Width="NaN" />
-                <Button
-                x:Name="BtnCancel"
-                Command="{Binding BtnCancel}"
-                IsEnabled="{Binding BtnCancelIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                Foreground ="{Binding BtnCancelForeground,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                Margin="276,392,10,0"
-                VerticalAlignment="Top"
-                Content="Cancel" Height="25" Width="NaN" />
-                <TextBlock
-                x:Name="TxtGUI"
-                Margin="10,426,10,0"
-                Text="{Binding TxtGUI,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                TextWrapping="Wrap" Height="24" VerticalAlignment="Top" />
-                <Button
-                x:Name="BtnCPassword"
-                Command="{Binding BtnCPassword}"
-                IsEnabled="{Binding BtnCPasswordIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                Foreground ="{Binding BtnCPasswordForeground,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                Height="25"
-                Margin="276,272,10,0"
-                VerticalAlignment="Top"
-                Content="Change Password" Width="NaN" />
-                <TextBox
-                x:Name="TxtNewUser"
-                Focusable="{Binding TxtNewUserFocusable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                
-                Width="338"
-                Height="22"
-                Margin="10,33,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Text="{Binding TxtNewUser,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                TabIndex="0"
-                Visibility="{Binding TxtNewUserVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                TextWrapping="Wrap" />
-                <Label
-                x:Name="lbl_Copy"
-                Width="187"
-                Height="24"
-                Margin="10,161,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Content="Email:"
-                FontSize="12"
-                FontWeight="Bold" />
-                <TextBox
-                x:Name="TxtEmail"
-                Text="{Binding TxtEmail,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                IsEnabled="{Binding TxtEmailIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                Width="365"
-                Height="23"
-                Margin="10,185,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                TextWrapping="Wrap" />
-                <CheckBox x:Name="ChkLocked" IsEnabled="{Binding ChkLockedIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                      IsChecked="{Binding ChkLockedIsChecked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                      Content="Locked" 
-                      HorizontalAlignment="Left" Margin="380,148,0,0" VerticalAlignment="Top" Width="100" Height="15"/>
-                <CheckBox x:Name="ChkDisable" IsEnabled="{Binding ChkDisableIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                      IsChecked="{Binding ChkDisableIsChecked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                      Content="Disable" HorizontalAlignment="Left" Margin="380,168,0,0" VerticalAlignment="Top" Width="100" Height="15"/>
-                <CheckBox x:Name="ChkForceChangePassword" IsEnabled="{Binding ChkForceChangePasswordIsEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                      IsChecked="{Binding ChkForceChangePasswordIsChecked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                      Content="Force Change Password" HorizontalAlignment="Left" Margin="380,188,0,0" VerticalAlignment="Top" Width="154" Height="15"/>
+                    <StackPanel Grid.Row="1" Margin="0,30,0,10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
 
-                <TextBlock x:Name="TxtStampDatePassword" 
-                           Text="{Binding TxtStampDatePassword,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                           IsEnabled="False" Margin="0,143,16,0" 
-                           TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Top" Height="24" HorizontalAlignment="Right" Width="149"/>
+                            <PasswordBox x:Name="CurrentPasswordBox"
+                                  Foreground="Green"
+                                  PasswordChar="*"
+                                  Margin="0,10"
+                                  Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Contraseña Actual"
+                                  FontFamily="Champagne &amp; Limousines" FontSize="18"
+                                  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                                  Visibility="{Binding IsCurrentPasswordVisible, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                  materialDesign:TextFieldAssist.HasClearButton="True">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PasswordChanged">
+                                        <i:InvokeCommandAction Command="{Binding CurrentPasswordChangedCommand}"
+                                                         CommandParameter="{Binding ElementName=CurrentPasswordBox}" />
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="Loaded">
+                                        <i:InvokeCommandAction Command="{Binding CurrentPasswordChangedCommand}"
+                                                         CommandParameter="{Binding ElementName=CurrentPasswordBox}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </PasswordBox>
 
-                <Button BorderThickness="1" Style="{x:Null}"
-                        Width="21" Height="21"
-                        Background="Transparent" Margin="374,93,365,346"
-                        >
-                    <materialDesign:PackIcon Kind="Eye" Foreground="Green" />
-                </Button>
+                            <TextBox x:Name="CurrentPasswordTextBox"
+                              Foreground="Green"
+                              Margin="0,10" 
+                              Grid.Column="0"
+                              materialDesign:HintAssist.Hint="Contraseña Actual"
+                              FontFamily="Champagne &amp; Limousines" FontSize="18"
+                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                              Text="{Binding CurrentPassword, UpdateSourceTrigger=PropertyChanged}"
+                              Visibility="{Binding IsCurrentPasswordVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                              materialDesign:TextFieldAssist.HasClearButton="True"/>
+
+                            <Button Grid.Column="1"
+                             Style="{StaticResource MaterialDesignIconButton}"
+                             Height="30" Width="30"
+                             Margin="8,10,0,10"
+                             Command="{Binding ToggleCurrentPasswordVisibilityCommand}"
+                             CommandParameter="{Binding ElementName=CurrentPasswordBox}">
+                                <materialDesign:PackIcon Kind="{Binding CurrentPasswordIcon}" Width="20" Height="20"/>
+                            </Button>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <PasswordBox x:Name="PasswordBox"
+                                   Foreground="Green"
+                                   PasswordChar="*"
+                                   Margin="0,10"
+                                   Grid.Column="0"
+                                   materialDesign:HintAssist.Hint="Nueva Contraseña"
+                                   FontFamily="Champagne &amp; Limousines" FontSize="18"
+                                   Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                                   Visibility="{Binding IsPasswordVisible, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                   materialDesign:TextFieldAssist.HasClearButton="True">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PasswordChanged">
+                                        <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
+                                                         CommandParameter="{Binding ElementName=PasswordBox}" />
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="Loaded">
+                                        <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
+                                                         CommandParameter="{Binding ElementName=PasswordBox}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </PasswordBox>
+                            <TextBox x:Name="PasswordTextBox"
+                               Foreground="Green"
+                               Margin="0,10" 
+                               Grid.Column="0"
+                               materialDesign:HintAssist.Hint="Nueva Contraseña"
+                               FontFamily="Champagne &amp; Limousines" FontSize="18"
+                               Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                               Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
+                               Visibility="{Binding IsPasswordVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                               materialDesign:TextFieldAssist.HasClearButton="True"/>
+                            <Button Grid.Column="1"
+                              Style="{StaticResource MaterialDesignIconButton}"
+                              Height="30" Width="30"
+                              Margin="8,10,0,10"
+                              Command="{Binding TogglePasswordVisibilityCommand}"
+                              CommandParameter="{Binding ElementName=PasswordBox}">
+                                <materialDesign:PackIcon Kind="{Binding PasswordIcon}" Width="20" Height="20"/>
+                            </Button>
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <PasswordBox x:Name="PasswordBoxVerificar"
+                                    Foreground="Green"
+                                    PasswordChar="*"
+                                    Margin="0,10"
+                                    Grid.Column="0"
+                                    materialDesign:HintAssist.Hint="Confirmar Contraseña"
+                                    FontFamily="Champagne &amp; Limousines" FontSize="18"
+                                    Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                                    Visibility="{Binding IsConfirmPasswordVisible, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                    materialDesign:TextFieldAssist.HasClearButton="True">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PasswordChanged">
+                                        <i:InvokeCommandAction Command="{Binding ConfirmPasswordChangedCommand}"
+                                                          CommandParameter="{Binding ElementName=PasswordBoxVerificar}" />
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="Loaded">
+                                        <i:InvokeCommandAction Command="{Binding ConfirmPasswordChangedCommand}"
+                                                          CommandParameter="{Binding ElementName=PasswordBoxVerificar}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </PasswordBox>
+                            <TextBox x:Name="PasswordTextBoxVerificar"
+                                Foreground="Green"
+                                Margin="0,10" 
+                                Grid.Column="0"
+                                materialDesign:HintAssist.Hint="Confirmar Contraseña"
+                                FontFamily="Champagne &amp; Limousines" FontSize="18"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                Text="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged}"
+                                Visibility="{Binding IsConfirmPasswordVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                materialDesign:TextFieldAssist.HasClearButton="True"/>
+                            <Button Grid.Column="1"
+                               Style="{StaticResource MaterialDesignIconButton}"
+                               Height="30" Width="30"
+                               Margin="8,10,0,10"
+                               Command="{Binding ToggleConfirmPasswordVisibilityCommand}"
+                               CommandParameter="{Binding ElementName=PasswordBoxVerificar}">
+                                <materialDesign:PackIcon Kind="{Binding ConfirmPasswordIcon}" Width="20" Height="20"/>
+                            </Button>
+                        </Grid>
+                        <Button Command="{Binding SaveCommand}"
+                           CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}"
+                           Style="{StaticResource MaterialDesignRaisedButton}"
+                           Margin="0,20,0,0"
+                           Content="{DynamicResource Save}"/>
+
+                        <Button Command="{Binding LimpiarFormularioCommand}"
+                           CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}"
+                           Style="{StaticResource MaterialDesignOutlinedButton}"
+                           Margin="0,10,0,0"
+                           Content="Limpiar"/>
+
+                    </StackPanel>
+
+                    <Grid Grid.Row="2" Background="Transparent">
 
 
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="238"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
 
+                        <TextBlock Grid.Row="0"  Background="Transparent" Text="{Binding ErrorMessage}"
+                              Foreground="{DynamicResource MaterialDesignValidationErrorBrush}"
+                              TextAlignment="Left"
+                              TextWrapping="Wrap" Margin="5,5,5,5" />
 
-
+                        <ItemsControl Grid.Row="1" ItemsSource="{Binding ValidationErrors}" Background="White" 
+                                             Visibility="{Binding ValidationErrors.Count, 
+                                             Converter={StaticResource BooleanToVisibilityConverter}}"
+                                             Margin="5,10,5,5"
+                                             Padding="10"
+                                             BorderBrush="{DynamicResource MaterialDesignValidationErrorBrush}"
+                                             BorderThickness="1">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" 
+                                          Foreground="{DynamicResource MaterialDesignValidationErrorBrush}" 
+                                          FontWeight="Medium"
+                                          Margin="0,2" 
+                                          TextWrapping="Wrap"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </Grid>
             </Grid>
-
         </Border>
-
-
     </Grid>
+
+
 
 </UserControl>

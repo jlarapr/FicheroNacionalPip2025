@@ -79,12 +79,12 @@ public partial class App : Application {
 
     private bool ConfigureServices() {
         try {
-            var basePath = AppDomain.CurrentDomain.BaseDirectory;
-            var environment = GetEnvironment();
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string environment = GetEnvironment();
 
             // Verificar la existencia de los archivos de configuración
-            var mainSettingsPath = Path.Combine(basePath, "appsettings.json");
-            var envSettingsPath = Path.Combine(basePath, $"appsettings.{environment}.json");
+            string mainSettingsPath = Path.Combine(basePath, "appsettings.json");
+            string envSettingsPath = Path.Combine(basePath, $"appsettings.{environment}.json");
 
             if (!File.Exists(mainSettingsPath)) {
                 throw new FileNotFoundException(
@@ -92,7 +92,7 @@ public partial class App : Application {
             }
 
             // Configurar la configuración
-            var builder = new ConfigurationBuilder()
+            IConfigurationBuilder builder = new ConfigurationBuilder()
                 .SetBasePath(basePath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
@@ -109,7 +109,7 @@ public partial class App : Application {
             _configuration = builder.Build();
 
             // Verificar la sección DatabaseConfig
-            var dbConfig = _configuration.GetSection("DatabaseConfig");
+            IConfigurationSection dbConfig = _configuration.GetSection("DatabaseConfig");
             if (!dbConfig.Exists()) {
                 throw new InvalidOperationException("La sección 'DatabaseConfig' no existe en la configuración.");
             }
@@ -177,8 +177,6 @@ public partial class App : Application {
 
             // Registrar ventanas del menú derecho
             
-            services.AddSingleton<AdminWindow>();
-            services.AddSingleton<AdminViewModel>();
 
             services.AddSingleton<HelpWindow>();
             services.AddSingleton<HelpViewModel>();
@@ -190,6 +188,9 @@ public partial class App : Application {
             services.AddTransient<SettingWindow>();
             services.AddTransient<ChangePasswordWindow>();
             services.AddTransient<ChangePasswordViewModel>();
+            services.AddTransient<AdminWindow>();
+            services.AddTransient<AdminViewModel>();
+
             
             // Registrar ventanas del menú izquierdo
             services.AddSingleton<HomeWindow>();

@@ -8,5 +8,8 @@ public partial class AdminWindow  {
         DataContext = adminViewModel;
     }
 
- 
+    private void CurrentPasswordTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+    {
+
+    }
 }

@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -20,26 +21,26 @@ public partial class ChangePasswordViewModel : ObservableObject {
     [ObservableProperty] private string _currentPassword = string.Empty;
     [ObservableProperty] private string _password = string.Empty;
     [ObservableProperty] private string _confirmPassword = string.Empty;
-    [ObservableProperty] private bool _resetPasswordBox = false;
-    [ObservableProperty] private bool _resetConfirmPasswordBox = false;
-    [ObservableProperty] private bool _resetCurrentPasswordBox = false;
+    [ObservableProperty] private bool _resetPasswordBox;
+    [ObservableProperty] private bool _resetConfirmPasswordBox;
+    [ObservableProperty] private bool _resetCurrentPasswordBox;
     [ObservableProperty] private string _errorMessage = string.Empty;
-    [ObservableProperty] private bool _isValidating = false;
+    [ObservableProperty] private bool _isValidating;
     [ObservableProperty] private ObservableCollection<string> _validationErrors = new();
     [ObservableProperty] private string _currentUsername = string.Empty;
 
     private readonly ILogger<ChangePasswordViewModel> _logger;
-    private readonly IPasswordPolicyService _passwordPolicyService;
+    // private readonly IPasswordPolicyService _passwordPolicyService;
     private readonly IUserManagementService _userManagementService;
 
     public IAsyncRelayCommand SaveCommand { get; }
 
     public ChangePasswordViewModel(
         ILogger<ChangePasswordViewModel> logger,
-        IPasswordPolicyService passwordPolicyService,
         IUserManagementService userManagementService) {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        _passwordPolicyService = passwordPolicyService ?? throw new ArgumentNullException(nameof(passwordPolicyService));
+        //IPasswordPolicyService passwordPolicyService,
+        // _passwordPolicyService = passwordPolicyService ?? throw new ArgumentNullException(nameof(passwordPolicyService));
         _userManagementService = userManagementService ?? throw new ArgumentNullException(nameof(userManagementService));
 
         MyTitle = "Change Password";
@@ -105,7 +106,7 @@ public partial class ChangePasswordViewModel : ObservableObject {
             ErrorMessage = "ÉXITO: Contraseña cambiada correctamente";
             
             // Limpiar usando el control pasado como parámetro
-            if (parameter is System.Windows.FrameworkElement control) {
+            if (parameter is FrameworkElement control) {
                 LimpiarFormulario(control);
                 _logger.LogInformation("Formulario limpiado correctamente después de cambio exitoso");
             } else {
@@ -152,10 +153,9 @@ public partial class ChangePasswordViewModel : ObservableObject {
             ResetCurrentPasswordBox = true;
             
             // Limpiar errores de validación pero preservar el mensaje principal
-            // ErrorMessage = string.Empty; // Comentado para preservar mensaje de éxito/error
             ValidationErrors.Clear();
             
-            // Asegurar que se re-evalúe el estado del botón
+            // Asegurar que se re evalúe el estado del botón
             SaveCommand.NotifyCanExecuteChanged();
             
             _logger.LogDebug("Campos del formulario limpiados exitosamente");
@@ -191,13 +191,13 @@ public partial class ChangePasswordViewModel : ObservableObject {
             LimpiarCampos();
             
             // Si se está pasando un control como parámetro, limpiar directamente los campos
-            if (parameter is System.Windows.FrameworkElement container) {
+            if (parameter is FrameworkElement container) {
                 _logger.LogDebug("Limpiando campos directamente de la interfaz de usuario");
                 
                 // Método 1: Buscar por nombre específico
-                var passwordBox = FindPasswordBoxByName(container, "PasswordBox");
-                var confirmPasswordBox = FindPasswordBoxByName(container, "PasswordBoxVerificar");
-                var currentPasswordBox = FindPasswordBoxByName(container, "CurrentPasswordBox");
+                PasswordBox? passwordBox = FindPasswordBoxByName(container, "PasswordBox");
+                PasswordBox? confirmPasswordBox = FindPasswordBoxByName(container, "PasswordBoxVerificar");
+                PasswordBox? currentPasswordBox = FindPasswordBoxByName(container, "CurrentPasswordBox");
                 
                 // Limpiar los encontrados directamente
                 passwordBox?.Clear();
@@ -208,8 +208,8 @@ public partial class ChangePasswordViewModel : ObservableObject {
                 ResetAllPasswordBoxes(parameter);
                 
                 // Forzar actualización de UI si es necesario
-                if (System.Windows.Application.Current.Dispatcher.CheckAccess()) {
-                    System.Windows.Application.Current.Dispatcher.Invoke(() => {
+                if (Application.Current.Dispatcher.CheckAccess()) {
+                    Application.Current.Dispatcher.Invoke(() => {
                         // Forzar actualización de UI
                         _logger.LogDebug("Forzando actualización de la interfaz de usuario");
                     });
@@ -228,7 +228,7 @@ public partial class ChangePasswordViewModel : ObservableObject {
     /// <summary>
     /// Busca un control PasswordBox por nombre dentro de un contenedor
     /// </summary>
-    private PasswordBox? FindPasswordBoxByName(System.Windows.FrameworkElement container, string name) {
+    private PasswordBox? FindPasswordBoxByName(FrameworkElement container, string name) {
         // Encontrar el PasswordBox por nombre
         if (container.FindName(name) is PasswordBox passwordBox) {
             return passwordBox;
@@ -262,19 +262,19 @@ public partial class ChangePasswordViewModel : ObservableObject {
         IsConfirmPasswordVisible = !IsConfirmPasswordVisible;
         ConfirmPasswordIcon = IsConfirmPasswordVisible ? PackIconKind.EyeOutline : PackIconKind.EyeOffOutline;
 
-        if (parameter is PasswordBox passwordBox && passwordBox.Name == "PasswordBoxVerificar") {
-            if (IsConfirmPasswordVisible) {
-                // Guardamos el valor antes de cambiar la visibilidad
-                ConfirmPassword = passwordBox.Password;
-            }
-            else {
-                // Restauramos el valor después de cambiar la visibilidad
-                passwordBox.Password = ConfirmPassword;
-            }
+        if (parameter is not PasswordBox { Name: "PasswordBoxVerificar" } passwordBox) return;
 
-            // Notificar a SaveCommand para re-evaluar si se debe habilitar
-            SaveCommand.NotifyCanExecuteChanged();
+        if (IsConfirmPasswordVisible) {
+            // Guardamos el valor antes de cambiar la visibilidad
+            ConfirmPassword = passwordBox.Password;
         }
+        else {
+            // Restauramos el valor después de cambiar la visibilidad
+            passwordBox.Password = ConfirmPassword;
+        }
+
+        // Notificar a SaveCommand para re-evaluar si se debe habilitar
+        SaveCommand.NotifyCanExecuteChanged();
     }
 
     [RelayCommand]
@@ -282,19 +282,19 @@ public partial class ChangePasswordViewModel : ObservableObject {
         IsCurrentPasswordVisible = !IsCurrentPasswordVisible;
         CurrentPasswordIcon = IsCurrentPasswordVisible ? PackIconKind.EyeOutline : PackIconKind.EyeOffOutline;
 
-        if (parameter is PasswordBox passwordBox && passwordBox.Name == "CurrentPasswordBox") {
-            if (IsCurrentPasswordVisible) {
-                // Guardamos el valor antes de cambiar la visibilidad
-                CurrentPassword = passwordBox.Password;
-            }
-            else {
-                // Restauramos el valor después de cambiar la visibilidad
-                passwordBox.Password = CurrentPassword;
-            }
+        if (parameter is not PasswordBox { Name: "CurrentPasswordBox" } passwordBox) return;
 
-            // Notificar a SaveCommand para re-evaluar si se debe habilitar
-            SaveCommand.NotifyCanExecuteChanged();
+        if (IsCurrentPasswordVisible) {
+            // Guardamos el valor antes de cambiar la visibilidad
+            CurrentPassword = passwordBox.Password;
         }
+        else {
+            // Restauramos el valor después de cambiar la visibilidad
+            passwordBox.Password = CurrentPassword;
+        }
+
+        // Notificar a SaveCommand para re-evaluar si se debe habilitar
+        SaveCommand.NotifyCanExecuteChanged();
     }
 
     // Agregamos una propiedad observable para el cambio de Password y ConfirmPassword
@@ -356,7 +356,7 @@ public partial class ChangePasswordViewModel : ObservableObject {
     /// Resetea manualmente los PasswordBox a través de su controlador
     /// </summary>
     public void ResetAllPasswordBoxes(object? container) {
-        if (container is System.Windows.DependencyObject depObj) {
+        if (container is DependencyObject depObj) {
             try {
                 // Buscar todos los PasswordBox dentro del objeto visual
                 var passwordBoxes = FindVisualChildren<PasswordBox>(depObj);
@@ -372,12 +372,12 @@ public partial class ChangePasswordViewModel : ObservableObject {
                 _logger.LogDebug("Limpiados {Count} controles PasswordBox", count);
                 
                 // Si no se encontraron, intentar buscar más arriba en el árbol visual
-                if (count == 0 && container is System.Windows.FrameworkElement frameworkElement) {
-                    if (frameworkElement.Parent is System.Windows.DependencyObject parent) {
-                        _logger.LogDebug("Buscando PasswordBox en el nivel superior");
-                        ResetAllPasswordBoxes(parent);
-                    }
-                }
+                if (count != 0 || container is not FrameworkElement frameworkElement) return;
+
+                if (frameworkElement.Parent is not { } parent) return;
+
+                _logger.LogDebug("Buscando PasswordBox en el nivel superior");
+                ResetAllPasswordBoxes(parent);
             }
             catch (Exception ex) {
                 _logger.LogError(ex, "Error al intentar resetear PasswordBox");
@@ -388,17 +388,17 @@ public partial class ChangePasswordViewModel : ObservableObject {
     /// <summary>
     /// Encuentra todos los controles de un tipo específico dentro de un elemento visual
     /// </summary>
-    private static IEnumerable<T> FindVisualChildren<T>(System.Windows.DependencyObject depObj) where T : System.Windows.DependencyObject {
+    private static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject {
         if (depObj == null) yield break;
 
-        for (int i = 0; i < System.Windows.Media.VisualTreeHelper.GetChildrenCount(depObj); i++) {
-            var child = System.Windows.Media.VisualTreeHelper.GetChild(depObj, i);
+        for (var i = 0; i < System.Windows.Media.VisualTreeHelper.GetChildrenCount(depObj); i++) {
+            DependencyObject? child = System.Windows.Media.VisualTreeHelper.GetChild(depObj, i);
 
-            if (child != null && child is T t) {
+            if (child is T t) {
                 yield return t;
             }
 
-            foreach (var childOfChild in FindVisualChildren<T>(child)) {
+            foreach (T childOfChild in FindVisualChildren<T>(child)) {
                 yield return childOfChild;
             }
         }
