@@ -10,5 +10,11 @@ namespace FicheroNacionalPip.Business.Models
         public string Email { get; init; } = string.Empty;
         public string AreasDeAcceso { get; init; } = string.Empty;
         public bool ForceChangePassword { get; init; }
+
+        /// <summary>
+        /// Contraseña del usuario.
+        /// </summary>
+        public string Password { get; init; } = string.Empty;
     }
-} 
+}
+

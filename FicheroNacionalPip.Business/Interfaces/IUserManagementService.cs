@@ -28,4 +28,5 @@ public interface IUserManagementService
     /// <param name="username">Nombre del usuario</param>
     /// <returns>Información sobre el estado de la contraseña</returns>
     Task<Result<UserPasswordInfo, string>> GetPasswordStatusAsync(string username);
-} 
+}
+

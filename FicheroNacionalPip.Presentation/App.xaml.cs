@@ -144,7 +144,7 @@ public partial class App : Application {
                         databaseConfig.Password = dbConfig["Password"] ?? "";
                     }
 
-                    var connectionString = databaseConfig.GetConnectionString();
+                    string connectionString = databaseConfig.GetConnectionString();
                     Log.Information("Configurando DbContext con cadena de conexión para servidor: {Server}, base de datos: {Database}",
                         databaseConfig.Server, databaseConfig.Database);
 
@@ -164,6 +164,7 @@ public partial class App : Application {
             
             // Registrar servicio de gestión de usuarios
             services.AddScoped<IUserManagementService, UserManagementService>();
+            services.AddScoped<IUserAdministrationService, UserAdministrationService>();
 
             // Registrar servicios de la UI
             services.AddSingleton<IViewService, ViewService>();

@@ -1,4 +1,4 @@
-using System.Security.Cryptography;
+
 using Microsoft.AspNetCore.Identity;
 using FicheroNacionalPip.Business.Interfaces;
 using FicheroNacionalPip.Business.Models;
@@ -45,7 +45,7 @@ namespace FicheroNacionalPip.Business.Services
 
                 try {
                     // Crear y disponer de un contexto para diagnóstico
-                    using var contextDiag = _dbContextFactory.CreateDbContext();
+                    using ApplicationDbContext contextDiag = _dbContextFactory.CreateDbContext();
                     _logger.LogInformation("Conexión a la base de datos creada correctamente");
                     // Intentar realizar una operación simple para probar la conexión
                     bool usersExist = contextDiag.Users.Any();
@@ -55,8 +55,8 @@ namespace FicheroNacionalPip.Business.Services
                     return Result<UserAuthInfo, string>.Fail($"Error de conexión a la base de datos: {exConn.Message}");
                 }
 
-                using var dbContext = _dbContextFactory.CreateDbContext();
-                var user = dbContext.Users
+                using ApplicationDbContext dbContext = _dbContextFactory.CreateDbContext();
+                User? user = dbContext.Users
                     .FirstOrDefault(u => u.UserName.ToLower() == username.ToLower());
 
                 if (user == null)

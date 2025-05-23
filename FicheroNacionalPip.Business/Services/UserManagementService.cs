@@ -161,4 +161,5 @@ public class UserManagementService(
         var user = new User();
         return _passwordHasher.HashPassword(user, password);
     }
-} 
+}
+

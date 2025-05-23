@@ -30,7 +30,6 @@ public partial class ChangePasswordViewModel : ObservableObject {
     [ObservableProperty] private string _currentUsername = string.Empty;
 
     private readonly ILogger<ChangePasswordViewModel> _logger;
-    // private readonly IPasswordPolicyService _passwordPolicyService;
     private readonly IUserManagementService _userManagementService;
 
     public IAsyncRelayCommand SaveCommand { get; }
@@ -38,12 +37,10 @@ public partial class ChangePasswordViewModel : ObservableObject {
     public ChangePasswordViewModel(
         ILogger<ChangePasswordViewModel> logger,
         IUserManagementService userManagementService) {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        //IPasswordPolicyService passwordPolicyService,
-        // _passwordPolicyService = passwordPolicyService ?? throw new ArgumentNullException(nameof(passwordPolicyService));
-        _userManagementService = userManagementService ?? throw new ArgumentNullException(nameof(userManagementService));
 
         MyTitle = "Change Password";
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _userManagementService = userManagementService ?? throw new ArgumentNullException(nameof(userManagementService));
         PasswordIcon = PackIconKind.EyeOffOutline;
         ConfirmPasswordIcon = PackIconKind.EyeOffOutline;
         CurrentPasswordIcon = PackIconKind.EyeOffOutline;
