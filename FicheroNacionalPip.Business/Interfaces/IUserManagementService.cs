@@ -23,6 +23,14 @@ public interface IUserManagementService
     Task<Result<bool, string>> ChangePasswordAsync(string username, string currentPassword, string newPassword);
 
     /// <summary>
+    /// Cambia la contraseña del usuario.
+    /// </summary>
+    /// <param name="username">Nombre del usuario</param>
+    /// <param name="newPassword">Nueva contraseña</param>
+    /// <returns>Resultado indicando si el cambio fue exitoso o un mensaje de error</returns>
+    Task<Result<bool, string>> ChangePasswordAsync(string username, string newPassword);
+
+    /// <summary>
     /// Obtiene el estado actual de la contraseña del usuario.
     /// </summary>
     /// <param name="username">Nombre del usuario</param>

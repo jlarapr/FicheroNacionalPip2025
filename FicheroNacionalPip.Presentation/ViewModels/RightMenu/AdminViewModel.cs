@@ -31,57 +31,119 @@ public partial class AdminViewModel : ObservableObject {
     [ObservableProperty] private string _newUserName = string.Empty;
     [ObservableProperty] private bool _isComboBoxEditable;
     [ObservableProperty] private bool _areButtonsEnabled = true;
+    [ObservableProperty] private bool _chkAllIsChecked;
+    [ObservableProperty] private bool _chkPasswordIsChecked;
+    [ObservableProperty] private bool _chkMaintenanceIsChecked;
+    [ObservableProperty] private bool _chkReportsIsChecked;
+    [ObservableProperty] private bool _chkSettingIsChecked;
+    [ObservableProperty] private bool _chkLockedIsChecked;
+    [ObservableProperty] private bool _chkDisableIsChecked;
+    [ObservableProperty] private bool _chkForceChangePasswordIsChecked;
+    [ObservableProperty] private bool _isEnablePasswordBox;
+    [ObservableProperty] private int _selectedIndex = -1;
+    [ObservableProperty] private bool _isEnableArea;
+    [ObservableProperty] private bool _isEnableUserBox = true;
 
     public IAsyncRelayCommand SaveCommand { get; }
     public IAsyncRelayCommand AddUserCommand { get; }
     public IAsyncRelayCommand EditUserCommand { get; }
     public IAsyncRelayCommand DeleteUserCommand { get; }
-    public IAsyncRelayCommand LoadUsersCommand { get; }
+    private IAsyncRelayCommand LoadUsersCommand { get; }
+    public IAsyncRelayCommand AddOrSelectUserCommand { get; }
+    public IAsyncRelayCommand ChangePasswordCommand { get; }
 
     private readonly ILogger<AdminViewModel> _logger;
     private readonly IUserAdministrationService _userAdministrationService;
+    private readonly IUserManagementService _userManagementService;
 
-    public AdminViewModel(ILogger<AdminViewModel> logger, IUserAdministrationService userAdministrationService) {
+    private bool _suppressUpdate;
+    private bool _isUpdatingFromAll;
+
+    public AdminViewModel(ILogger<AdminViewModel> logger, IUserAdministrationService userAdministrationService,
+        IUserManagementService userManagementService) {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _userAdministrationService = userAdministrationService ?? throw new ArgumentNullException(nameof(userAdministrationService));
-
+        _userManagementService = userManagementService ?? throw new ArgumentNullException(nameof(userManagementService));
         MyTitle = "User maintenance";
         PasswordIcon = PackIconKind.EyeOffOutline;
         ConfirmPasswordIcon = PackIconKind.EyeOffOutline;
-        
+        IsEnablePasswordBox = true;
+
+        AddUserCommand = new AsyncRelayCommand(AddUserAsync, CanAddUserAsync);
+        ChangePasswordCommand = new AsyncRelayCommand(ChangePasswordAsync, CanChangePasswordAsync);
+        EditUserCommand = new AsyncRelayCommand(EditUserAsync, CanEditUserAsync);
+        DeleteUserCommand = new AsyncRelayCommand(DeleteUserAsync, CanDeleteUserAsync);
+
         SaveCommand = new AsyncRelayCommand<object>(SaveAsyncWithParameter, CanSaveAsync);
-        AddUserCommand = new AsyncRelayCommand<object>(AddUserAsync, CanAddUserAsync);
-        EditUserCommand = new AsyncRelayCommand<object>(EditUserAsync, CanEditUserAsync);
-        DeleteUserCommand = new AsyncRelayCommand<object>(DeleteUserAsync, CanDeleteUserAsync);
         LoadUsersCommand = new AsyncRelayCommand(LoadUsersAsync);
+        AddOrSelectUserCommand = new AsyncRelayCommand(AddOrSelectUserAsync);
 
         ErrorMessage = "AdminViewModel inicializado";
         _logger.LogInformation("AdminViewModel inicializado");
 
         // Load users when the ViewModel is initialized
         LoadUsersCommand.Execute(null);
-        IsComboBoxEditable =  true; // TODO: esto es teporero
+        IsComboBoxEditable = false; // TODO: esto es temporero
     }
 
-    private bool CanDeleteUserAsync(object? obj) {
-        return !IsValidating && obj != null;
+    private bool CanChangePasswordAsync() {
+        return SelectedUser != null && !IsValidating;
     }
 
-    private async Task DeleteUserAsync(object? arg) {
-        if (arg is not string userId || string.IsNullOrWhiteSpace(userId)) {
+    private async Task ChangePasswordAsync() {
+        try {
+            IsValidating = true;
+            ErrorMessage = string.Empty;
+            ValidationErrors.Clear();
+
+            if (SelectedUser == null) {
+                _logger.LogWarning("EditUserAsync: No user selected.");
+                ErrorMessage = "No user selected.";
+                return;
+            }
+
+            // Llamar directamente al servicio que ya implementa todas las validaciones
+            Result<bool, string> changeResult = await _userManagementService.ChangePasswordAsync(
+                SelectedUser.UserName, Password);
+
+            if (changeResult.IsFailure) {
+                ErrorMessage = "ERROR: " + changeResult.GetErrorOrDefault();
+                ValidationErrors.Add(changeResult.GetErrorOrDefault() ?? "Error desconocido");
+                IsValidating = false;
+                return;
+            }
+
+            // Si llegamos aquí, el cambio fue exitoso
+            ErrorMessage = "ÉXITO: Contraseña cambiada correctamente";
+        }
+        catch (Exception ex) {
+            _logger.LogError(ex, "An error occurred while Changing Password");
+            ErrorMessage = ex.Message;
+            return;
+        }
+
+        return;
+    }
+
+    private bool CanDeleteUserAsync() {
+        return SelectedUser != null && !IsValidating;
+    }
+
+    private async Task DeleteUserAsync() {
+        if (SelectedUser?.UserId == null) {
             _logger.LogWarning("DeleteUserAsync was called with an invalid userId.");
             ErrorMessage = "Invalid user ID.";
             return;
         }
 
+        var userId = SelectedUser.UserId.ToString();
         try {
             IsValidating = true;
             _logger.LogInformation("Attempting to delete user with ID: {UserId}", userId);
-            
+
             Result<bool, string> deleteResult = await _userAdministrationService.DeleteUserAsync(userId);
-            
-            if (deleteResult.IsFailure)
-            {
+
+            if (deleteResult.IsFailure) {
                 ErrorMessage = $"Error: deleting user: {deleteResult.GetErrorOrDefault()}";
                 ValidationErrors.Add(deleteResult.GetErrorOrDefault() ?? ErrorMessage);
                 IsValidating = false;
@@ -100,23 +162,14 @@ public partial class AdminViewModel : ObservableObject {
         }
     }
 
-    private bool CanEditUserAsync(object? obj) {
-        if (obj is not UserAuthInfo user) {
-            _logger.LogWarning("CanEditUserAsync: Invalid object type or null.");
-            return false;
-        }
-
-        bool canEdit = !string.IsNullOrWhiteSpace(user.UserName); //TODO: verificar esto -> && user.IsActive;
-
-        if (!canEdit) _logger.LogInformation("CanEditUserAsync: User cannot be edited due to missing username or inactive status.");
-
-        return canEdit;
+    private bool CanEditUserAsync() {
+        return SelectedUser != null && !IsValidating;
     }
 
-    private async Task EditUserAsync(object? arg) {
-        if (arg is not UserDto user) {
-            _logger.LogWarning("EditUserAsync called with invalid argument.");
-            ErrorMessage = "Invalid user data.";
+    private async Task EditUserAsync() {
+        if (SelectedUser == null) {
+            _logger.LogWarning("EditUserAsync: No user selected.");
+            ErrorMessage = "No user selected.";
             return;
         }
 
@@ -125,25 +178,26 @@ public partial class AdminViewModel : ObservableObject {
             ValidationErrors.Clear();
 
             // Perform validation
-            if (string.IsNullOrWhiteSpace(user.UserName)) ValidationErrors.Add("User name cannot be empty.");
+            if (string.IsNullOrWhiteSpace(SelectedUser.UserName))
+                ValidationErrors.Add("User name cannot be empty.");
 
-            if (string.IsNullOrWhiteSpace(user.Email) || !user.Email.Contains("@")) ValidationErrors.Add("Invalid email address.");
+            if (string.IsNullOrWhiteSpace(SelectedUser.Email) || !SelectedUser.Email.Contains("@"))
+                ValidationErrors.Add("Invalid email address.");
 
             if (ValidationErrors.Count > 0) {
                 ErrorMessage = "Validation errors occurred.";
                 return;
             }
 
-            Result<bool, string> editResult = await _userAdministrationService.EditUserAsync(user);
+            Result<bool, string> editResult = await _userAdministrationService.EditUserAsync(SelectedUser);
 
             if (editResult.IsFailure) {
-                ErrorMessage = $"Error: deleting user: {editResult.GetErrorOrDefault()}";
+                ErrorMessage = $"Error editing user: {editResult.GetErrorOrDefault()}";
                 ValidationErrors.Add(editResult.GetErrorOrDefault() ?? ErrorMessage);
-                IsValidating = false;
                 return;
             }
 
-            _logger.LogInformation("User {UserUserName} edited successfully.", user.UserName);
+            _logger.LogInformation("User {UserUserName} edited successfully.", SelectedUser.UserName);
             ErrorMessage = string.Empty;
         }
         catch (Exception ex) {
@@ -155,11 +209,11 @@ public partial class AdminViewModel : ObservableObject {
         }
     }
 
-    private bool CanAddUserAsync(object? obj) {
-        return AreButtonsEnabled;
+    private bool CanAddUserAsync() {
+        return SelectedUser == null;
     }
 
-    private async Task AddUserAsync(object? arg) {
+    private Task AddUserAsync() {
         try {
             IsComboBoxEditable = true;
             AreButtonsEnabled = false;
@@ -168,6 +222,8 @@ public partial class AdminViewModel : ObservableObject {
         finally {
             IsValidating = false;
         }
+
+        return Task.CompletedTask;
     }
 
     private async Task SaveAsyncWithParameter(object? parameter) {
@@ -175,22 +231,19 @@ public partial class AdminViewModel : ObservableObject {
             IsValidating = true;
             ErrorMessage = string.Empty;
             ValidationErrors.Clear();
-            
+
             // return method no implemented yet
             await Task.Delay(100);
             // Simulate saving data
-            
-            
+
             _logger.LogInformation("ÉXITO: Cambios guardados correctamente");
             ErrorMessage = "ÉXITO: Cambios guardados correctamente";
             // Limpiar usando el control pasado como parámetro
-            if (parameter is FrameworkElement control)
-            {
+            if (parameter is FrameworkElement control) {
                 LimpiarFormulario(control);
                 _logger.LogInformation("Formulario limpiado correctamente después de cambio exitoso");
             }
-            else
-            {
+            else {
                 // Si no hay parámetro, usar la limpieza básica
                 LimpiarCampos();
                 _logger.LogWarning("No se recibió control para limpiar los PasswordBox directamente");
@@ -200,15 +253,14 @@ public partial class AdminViewModel : ObservableObject {
             _logger.LogError(ex, "Error al guardar los cambios");
             ErrorMessage = "Error al guardar los cambios";
         }
-        finally
-        {
+        finally {
             IsValidating = false;
         }
     }
 
     private bool CanSaveAsync(object? parameter = null) {
         try {
-            // Las contraseñas no deben estar vac�as
+            // Las contraseñas no deben estar vacías
             if (string.IsNullOrWhiteSpace(Password) ||
                 string.IsNullOrWhiteSpace(ConfirmPassword)) {
                 return false;
@@ -263,15 +315,14 @@ public partial class AdminViewModel : ObservableObject {
     }
 
     [RelayCommand]
-    private void PasswordChanged(object? parameter)
-    {
+    private void PasswordChanged(object? parameter) {
         if (parameter is not PasswordBox passwordBox) return;
-        
+
         Password = passwordBox.Password;
 
         // Si se ha solicitado un reset del PasswordBox, limpiarlo ahora
         if (!ResetPasswordBox) return;
-        
+
         passwordBox.Clear();
         ResetPasswordBox = false;
     }
@@ -305,19 +356,19 @@ public partial class AdminViewModel : ObservableObject {
             // Primero, limpiar las propiedades del ViewModel
             LimpiarCampos();
 
-            // Si se est� pasando un control como par�metro, limpiar directamente los campos
+            // Si se está pasando un control como parámetro, limpiar directamente los campos
             if (parameter is FrameworkElement container) {
                 _logger.LogDebug("Limpiando campos directamente de la interfaz de usuario");
 
                 // Método 1: Buscar por nombre específico
                 PasswordBox? passwordBox = FindPasswordBoxByName(container, "PasswordBox");
                 PasswordBox? confirmPasswordBox = FindPasswordBoxByName(container, "PasswordBoxVerificar");
-                
+
                 // Limpiar los encontrados directamente
                 passwordBox?.Clear();
                 confirmPasswordBox?.Clear();
-                
-                // M�todo 2: Buscar todos los PasswordBox en el arbor visual
+
+                // Método 2: Buscar todos los PasswordBox en el arbor visual
                 ResetAllPasswordBoxes(parameter);
 
                 // Forzar actualización de UI si es necesario
@@ -330,7 +381,13 @@ public partial class AdminViewModel : ObservableObject {
             }
 
             // Notificar que el comando puede haber cambiado su estado
+            AddUserCommand.NotifyCanExecuteChanged();
+            ChangePasswordCommand.NotifyCanExecuteChanged();
+            EditUserCommand.NotifyCanExecuteChanged();
+            DeleteUserCommand.NotifyCanExecuteChanged();
             SaveCommand.NotifyCanExecuteChanged();
+
+            _logger.LogDebug("Formulario limpiado");
         }
         catch (Exception ex) {
             _logger.LogError(ex, "Error al limpiar formulario");
@@ -351,10 +408,24 @@ public partial class AdminViewModel : ObservableObject {
             ErrorMessage = string.Empty;
             Email = string.Empty;
 
+            ChkAllIsChecked = false;
+            ChkPasswordIsChecked = false;
+            ChkMaintenanceIsChecked = false;
+            ChkReportsIsChecked = false;
+            ChkSettingIsChecked = false;
+            ChkLockedIsChecked = false;
+            ChkDisableIsChecked = false;
+            ChkForceChangePasswordIsChecked = false;
+            NewUserName = string.Empty;
+            SelectedIndex = -1;
+
             // Resetear estados de visibilidad
             IsPasswordVisible = false;
             IsConfirmPasswordVisible = false;
 
+            IsEnablePasswordBox = false;
+            IsEnableArea = false;
+            IsEnableUserBox = true;
             // Resetear iconos
             PasswordIcon = PackIconKind.EyeOffOutline;
             ConfirmPasswordIcon = PackIconKind.EyeOffOutline;
@@ -390,7 +461,7 @@ public partial class AdminViewModel : ObservableObject {
     }
 
     /// <summary>
-    /// Resetea manualmente los PasswordBox a trav�s de su controlador
+    /// Resetea manualmente los PasswordBox a través de su controlador
     /// </summary>
     public void ResetAllPasswordBoxes(object? container) {
         if (container is DependencyObject depObj) {
@@ -442,29 +513,24 @@ public partial class AdminViewModel : ObservableObject {
     }
 
     // Agregamos una propiedad observable para el cambio de Password y ConfirmPassword
-    partial void OnPasswordChanged(string value)
-    {
+    partial void OnPasswordChanged(string value) {
         // Notificar a SaveCommand que debe re-evaluar CanExecute
         SaveCommand.NotifyCanExecuteChanged();
     }
 
-    partial void OnConfirmPasswordChanged(string value)
-    {
+    partial void OnConfirmPasswordChanged(string value) {
         // Notificar a SaveCommand que debe re-evaluar CanExecute
         SaveCommand.NotifyCanExecuteChanged();
     }
 
-    partial void OnErrorMessageChanged(string value)
-    {
+    partial void OnErrorMessageChanged(string value) {
         // Asegurar que nunca sea null
-        if (value == null)
-        {
+        if (value == null) {
             ErrorMessage = string.Empty;
         }
 
         // Si hay un mensaje de error, logearlo para debug
-        if (!string.IsNullOrEmpty(value))
-        {
+        if (!string.IsNullOrEmpty(value)) {
             _logger.LogDebug("Mensaje de error establecido: {ErrorMessage}", value);
         }
     }
@@ -480,30 +546,47 @@ public partial class AdminViewModel : ObservableObject {
             }
 
             _logger.LogInformation("Usuarios cargados exitosamente.");
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             _logger.LogError(ex, "Error al cargar usuarios.");
             ErrorMessage = "Error al cargar usuarios.";
-        } finally {
+        }
+        finally {
             IsValidating = false;
         }
     }
 
     private async Task AddOrSelectUserAsync() {
         if (string.IsNullOrWhiteSpace(NewUserName)) {
-            ErrorMessage = "Username cannot be empty.";
             return;
         }
 
-        var existingUser = Users.FirstOrDefault(u => u.UserName.Equals(NewUserName, StringComparison.OrdinalIgnoreCase));
+        UserDto? existingUser = Users.FirstOrDefault(u => u.UserName.Equals(NewUserName, StringComparison.OrdinalIgnoreCase));
         if (existingUser != null) {
             SelectedUser = existingUser;
+            Email = existingUser.Email;
+            string[] areasDeAccesoArray = existingUser.AreasDeAcceso.ToLower().Split('|');
+            ChkAllIsChecked = areasDeAccesoArray.Contains("all");
+            ChkPasswordIsChecked = ChkAllIsChecked || areasDeAccesoArray.Contains("changepassword");
+            ChkMaintenanceIsChecked = ChkAllIsChecked || areasDeAccesoArray.Contains("maintenance");
+            ChkReportsIsChecked = ChkAllIsChecked || areasDeAccesoArray.Contains("reports");
+            ChkSettingIsChecked = ChkAllIsChecked || areasDeAccesoArray.Contains("setting");
+            ChkLockedIsChecked = existingUser.Locked ?? false;
+            ChkDisableIsChecked = existingUser.Disable ?? false;
+            ChkForceChangePasswordIsChecked = existingUser.ForceChangePassword ?? false;
+            AddUserCommand.NotifyCanExecuteChanged();
+            ChangePasswordCommand.NotifyCanExecuteChanged();
+            EditUserCommand.NotifyCanExecuteChanged();
+            DeleteUserCommand.NotifyCanExecuteChanged();
+            IsEnablePasswordBox = false;
+            IsEnableUserBox = false;
             return;
         }
 
         try {
             IsValidating = true;
             var newUser = new UserDto { UserName = NewUserName };
-            var result = await _userAdministrationService.AddUserAsync(newUser);
+            Result<bool, string> result = await _userAdministrationService.AddUserAsync(newUser);
 
             if (result.IsFailure) {
                 ErrorMessage = result.GetErrorOrDefault() ?? "Failed to add user.";
@@ -514,12 +597,59 @@ public partial class AdminViewModel : ObservableObject {
             SelectedUser = newUser;
             NewUserName = string.Empty;
             ErrorMessage = "User added successfully.";
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             _logger.LogError(ex, "Error adding user.");
             ErrorMessage = "An error occurred while adding the user.";
-        } finally {
+        }
+        finally {
             IsValidating = false;
         }
     }
-}
 
+    private void SyncAccessAreas(bool isAllSelected) {
+        _isUpdatingFromAll = true;
+        ChkPasswordIsChecked = isAllSelected;
+        ChkMaintenanceIsChecked = isAllSelected;
+        ChkReportsIsChecked = isAllSelected;
+        ChkSettingIsChecked = isAllSelected;
+        _isUpdatingFromAll = false;
+    }
+
+    partial void OnChkAllIsCheckedChanged(bool value) {
+        if (!_suppressUpdate) {
+            SyncAccessAreas(value);
+        }
+    }
+
+    private void UpdateAllOption() {
+        if (_isUpdatingFromAll)
+            return;
+
+        bool shouldBeChecked = ChkPasswordIsChecked &&
+                               ChkMaintenanceIsChecked &&
+                               ChkReportsIsChecked &&
+                               ChkSettingIsChecked;
+
+        if (ChkAllIsChecked == shouldBeChecked) return;
+        _suppressUpdate = true;
+        ChkAllIsChecked = shouldBeChecked;
+        _suppressUpdate = false;
+    }
+
+    partial void OnChkPasswordIsCheckedChanged(bool value) {
+        UpdateAllOption();
+    }
+
+    partial void OnChkMaintenanceIsCheckedChanged(bool value) {
+        UpdateAllOption();
+    }
+
+    partial void OnChkReportsIsCheckedChanged(bool value) {
+        UpdateAllOption();
+    }
+
+    partial void OnChkSettingIsCheckedChanged(bool value) {
+        UpdateAllOption();
+    }
+}

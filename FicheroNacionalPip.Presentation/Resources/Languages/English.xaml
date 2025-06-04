@@ -32,4 +32,12 @@
 
     <system:String x:Key="Save">Save</system:String>
     <system:String x:Key="PasswordVerification">Password verification</system:String>
+    <system:String x:Key="NewPassword">New password</system:String>
+    <system:String x:Key="ConfirmPassword">Confirm Password</system:String>
+    <system:String x:Key="SelectAddUser">Select or add a user</system:String>
+    <system:String x:Key="AddUser">Add user</system:String>
+    <system:String x:Key="ChangePassword">Change Password</system:String>
+    <system:String x:Key="EditUser">Edit user</system:String>
+    <system:String x:Key="DeleteUser">Delete user</system:String>
+
 </ResourceDictionary>

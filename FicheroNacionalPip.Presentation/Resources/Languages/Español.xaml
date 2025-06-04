@@ -33,4 +33,12 @@
 
     <system:String x:Key="Save">Guardar</system:String>
     <system:String x:Key="PasswordVerification">Verificación de contraseña</system:String>
+    <system:String x:Key="NewPassword">Nueva Contraseña</system:String>
+    <system:String x:Key="ConfirmPassword">Confirmar Contraseña</system:String>
+    <system:String x:Key="SelectAddUser">Seleccionar o añadir un usuaria</system:String>
+    <system:String x:Key="AddUser">Añadir usuario</system:String>
+    <system:String x:Key="ChangePassword">Cambiar contraseña</system:String>
+    <system:String x:Key="EditUser">Editar user</system:String>
+    <system:String x:Key="DeleteUser">Eliminar user</system:String>
+
 </ResourceDictionary>

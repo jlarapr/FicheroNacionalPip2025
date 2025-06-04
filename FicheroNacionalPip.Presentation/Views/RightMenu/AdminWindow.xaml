@@ -17,189 +17,214 @@
                 <ResourceDictionary Source="../Dictionary/DictionaryWindow.xaml" />
                 <ResourceDictionary Source="../Dictionary/DictionaryLoginWindow.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <infrastructure:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
-            <infrastructure:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <infrastructure:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+            <infrastructure:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Cursor="Hand" Background="Transparent" >
-        <Border BorderBrush="Black" Background="Beige" HorizontalAlignment="Stretch" Padding="4" BorderThickness="3" CornerRadius="10" Margin="0">
+    <Grid Cursor="Hand" Background="Transparent">
+        <Border BorderBrush="Black" Background="Beige" HorizontalAlignment="Stretch" Padding="4" BorderThickness="3"
+                CornerRadius="10" Margin="0">
             <Border.Effect>
                 <DropShadowEffect Color="Gray" Opacity="80" ShadowDepth="16"></DropShadowEffect>
             </Border.Effect>
             <Grid>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="1" Margin="20,20,20,20" Grid.ColumnSpan="2">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition/>
-                        <RowDefinition Height="Auto" MinHeight="311"/>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" MinHeight="311" />
                     </Grid.RowDefinitions>
 
-                    <Label Content="{Binding MyTitle}" FontWeight="Bold" FontSize="25" Margin="10,1,209,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding MyTitle}" FontWeight="Bold" FontSize="25" Margin="10,1,209,0"
+                           VerticalAlignment="Top" />
 
-                    <Grid Grid.Row="0" HorizontalAlignment="Right" Height="70" Margin="0,0,10,20" VerticalAlignment="Top" Width="100" >
+                    <Grid Grid.Row="0" HorizontalAlignment="Right" Height="70" Margin="0,0,10,20"
+                          VerticalAlignment="Top" Width="100">
                         <materialDesign:PackIcon Kind="UserAdd" Foreground="Green" Margin="0" Height="70" Width="95" />
                     </Grid>
 
                     <Grid Grid.Row="1" Background="Transparent">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <GroupBox Grid.Column="0" Header="User Information"  Background="Transparent" FontFamily="Champagne &amp; Limousines" FontSize="18">
-                            <StackPanel Margin="0,10,16,10" VerticalAlignment="Top" >
+                        <GroupBox Grid.Column="0" Header="User Information" Background="Transparent"
+                                  FontFamily="Champagne &amp; Limousines" FontSize="18">
+                            <StackPanel Margin="0,10,16,10" VerticalAlignment="Top">
                                 <Grid Margin="10 10 10 0">
                                     <!--This ComboBox Shows All user existent in Data Base and adds new user.  -->
                                     <ComboBox x:Name="CmbUsers"
+                                              IsEnabled="{Binding IsEnableUserBox, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                               FontFamily="Champagne &amp; Limousines"
                                               FontSize="18"
                                               Foreground="Green"
                                               FontWeight="Bold"
                                               Style="{StaticResource MaterialDesignComboBox}"
-                                              materialDesign:HintAssist.Hint="Select or add a user"
+                                              materialDesign:HintAssist.Hint="{DynamicResource SelectAddUser}"
                                               ItemsSource="{Binding Users}"
                                               DisplayMemberPath="UserName"
                                               SelectedItem="{Binding SelectedUser}"
+                                              SelectedIndex="{Binding SelectedIndex,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"
                                               Text="{Binding NewUserName, UpdateSourceTrigger=PropertyChanged}"
-                                              IsEditable="{Binding IsComboBoxEditable}"/>
+                                              IsEditable="{Binding IsComboBoxEditable}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="SelectionChanged">
+                                                <i:InvokeCommandAction Command="{Binding AddOrSelectUserCommand}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="LostFocus">
+                                                <i:InvokeCommandAction Command="{Binding AddOrSelectUserCommand}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </ComboBox>
                                 </Grid>
                                 <Grid Margin="10 10 10 0">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
-                                    <PasswordBox x:Name="PasswordBox"
-                                   Foreground="Green"
-                                   PasswordChar="*"
-                                   Margin="0,10"
-                                   Grid.Column="0"
-                                   materialDesign:HintAssist.Hint="Nueva Contraseña"
-                                   FontFamily="Champagne &amp; Limousines" FontSize="18"
-                                   Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
-                                   Visibility="{Binding IsPasswordVisible, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                                   materialDesign:TextFieldAssist.HasClearButton="True">
+                                    <PasswordBox x:Name="PasswordBox" IsEnabled="{Binding IsEnablePasswordBox}"
+                                                 Foreground="Green"
+                                                 PasswordChar="*"
+                                                 Margin="0,10"
+                                                 Grid.Column="0"
+                                                 materialDesign:HintAssist.Hint="{DynamicResource NewPassword}"
+                                                 FontFamily="Champagne &amp; Limousines" FontSize="18"
+                                                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                                                 Visibility="{Binding IsPasswordVisible, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                                 materialDesign:TextFieldAssist.HasClearButton="True">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="PasswordChanged">
                                                 <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
-                                                         CommandParameter="{Binding ElementName=PasswordBox}" />
+                                                                       CommandParameter="{Binding ElementName=PasswordBox}" />
                                             </i:EventTrigger>
                                             <i:EventTrigger EventName="Loaded">
                                                 <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
-                                                         CommandParameter="{Binding ElementName=PasswordBox}" />
+                                                                       CommandParameter="{Binding ElementName=PasswordBox}" />
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </PasswordBox>
-                                    <TextBox x:Name="PasswordTextBox"
-                               Foreground="Green"
-                               Margin="0,10" 
-                               Grid.Column="0"
-                               materialDesign:HintAssist.Hint="Nueva Contraseña"
-                               FontFamily="Champagne &amp; Limousines" FontSize="18"
-                               Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                               Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
-                               Visibility="{Binding IsPasswordVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
-                               materialDesign:TextFieldAssist.HasClearButton="True"/>
-                                    <Button Grid.Column="1"
-                              Style="{StaticResource MaterialDesignIconButton}"
-                              Height="30" Width="30"
-                              Margin="8,10,0,10"
-                              Command="{Binding TogglePasswordVisibilityCommand}"
-                              CommandParameter="{Binding ElementName=PasswordBox}">
-                                        <materialDesign:PackIcon Kind="{Binding PasswordIcon}" Width="20" Height="20"/>
+                                    <TextBox x:Name="PasswordTextBox" IsEnabled="{Binding IsEnablePasswordBox}"
+                                             Foreground="Green"
+                                             Margin="0,10"
+                                             Grid.Column="0"
+                                             materialDesign:HintAssist.Hint="{DynamicResource NewPassword}"
+                                             FontFamily="Champagne &amp; Limousines" FontSize="18"
+                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                             Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
+                                             Visibility="{Binding IsPasswordVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                             materialDesign:TextFieldAssist.HasClearButton="True" />
+                                    <Button Grid.Column="1" IsEnabled="{Binding IsEnablePasswordBox}"
+                                            Style="{StaticResource MaterialDesignIconButton}"
+                                            Height="30" Width="30"
+                                            Margin="8,10,0,10"
+                                            Command="{Binding TogglePasswordVisibilityCommand}"
+                                            CommandParameter="{Binding ElementName=PasswordBox}">
+                                        <materialDesign:PackIcon Kind="{Binding PasswordIcon}" Width="20" Height="20" />
                                     </Button>
                                 </Grid>
                                 <Grid Margin="10 10 10 0">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <PasswordBox x:Name="PasswordBoxVerificar"
-                                    Foreground="Green"
-                                    PasswordChar="*"
-                                    Margin="0,10"
-                                    Grid.Column="0"
-                                    materialDesign:HintAssist.Hint="Confirmar Contraseña"
-                                    FontFamily="Champagne &amp; Limousines" FontSize="18"
-                                    Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
-                                    Visibility="{Binding IsConfirmPasswordVisible, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                                    materialDesign:TextFieldAssist.HasClearButton="True">
+                                                 IsEnabled="{Binding IsEnablePasswordBox}"
+                                                 Foreground="Green"
+                                                 PasswordChar="*"
+                                                 Margin="0,10"
+                                                 Grid.Column="0"
+                                                 materialDesign:HintAssist.Hint="{DynamicResource ConfirmPassword}"
+                                                 FontFamily="Champagne &amp; Limousines" FontSize="18"
+                                                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                                                 Visibility="{Binding IsConfirmPasswordVisible, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                                 materialDesign:TextFieldAssist.HasClearButton="True">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="PasswordChanged">
-                                                <i:InvokeCommandAction Command="{Binding ConfirmPasswordChangedCommand}"
-                                                          CommandParameter="{Binding ElementName=PasswordBoxVerificar}" />
+                                                <i:InvokeCommandAction
+                                                    Command="{Binding ConfirmPasswordChangedCommand}"
+                                                    CommandParameter="{Binding ElementName=PasswordBoxVerificar}" />
                                             </i:EventTrigger>
                                             <i:EventTrigger EventName="Loaded">
-                                                <i:InvokeCommandAction Command="{Binding ConfirmPasswordChangedCommand}"
-                                                          CommandParameter="{Binding ElementName=PasswordBoxVerificar}" />
+                                                <i:InvokeCommandAction
+                                                    Command="{Binding ConfirmPasswordChangedCommand}"
+                                                    CommandParameter="{Binding ElementName=PasswordBoxVerificar}" />
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </PasswordBox>
                                     <TextBox x:Name="PasswordTextBoxVerificar"
-                                Foreground="Green"
-                                Margin="0,10" 
-                                Grid.Column="0"
-                                materialDesign:HintAssist.Hint="Confirmar Contraseña"
-                                FontFamily="Champagne &amp; Limousines" FontSize="18"
-                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                Text="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged}"
-                                Visibility="{Binding IsConfirmPasswordVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                materialDesign:TextFieldAssist.HasClearButton="True"/>
-                                    <Button Grid.Column="1"
-                               Style="{StaticResource MaterialDesignIconButton}"
-                               Height="30" Width="30"
-                               Margin="8,10,0,10"
-                               Command="{Binding ToggleConfirmPasswordVisibilityCommand}"
-                               CommandParameter="{Binding ElementName=PasswordBoxVerificar}">
-                                        <materialDesign:PackIcon Kind="{Binding ConfirmPasswordIcon}" Width="20" Height="20"/>
+                                             IsEnabled="{Binding IsEnablePasswordBox}"
+                                             Foreground="Green"
+                                             Margin="0,10"
+                                             Grid.Column="0"
+                                             materialDesign:HintAssist.Hint="{DynamicResource ConfirmPassword}"
+                                             FontFamily="Champagne &amp; Limousines" FontSize="18"
+                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                             Text="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged}"
+                                             Visibility="{Binding IsConfirmPasswordVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                             materialDesign:TextFieldAssist.HasClearButton="True" />
+                                    <Button Grid.Column="1" IsEnabled="{Binding IsEnablePasswordBox}"
+                                            Style="{StaticResource MaterialDesignIconButton}"
+                                            Height="30" Width="30"
+                                            Margin="8,10,0,10"
+                                            Command="{Binding ToggleConfirmPasswordVisibilityCommand}"
+                                            CommandParameter="{Binding ElementName=PasswordBoxVerificar}">
+                                        <materialDesign:PackIcon Kind="{Binding ConfirmPasswordIcon}" Width="20"
+                                                                 Height="20" />
                                     </Button>
                                 </Grid>
 
                                 <TextBox x:Name="TxtEmail" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
+                                         IsEnabled="{Binding IsEnableArea}"
                                          Foreground="Green" FontWeight="Bold"
-                                         Margin="10,10" 
+                                         Margin="10,10"
                                          materialDesign:HintAssist.Hint="Email"
                                          materialDesign:TextFieldAssist.HasClearButton="True"
                                          FontFamily="Champagne &amp; Limousines" FontSize="18"
-                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                         />
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
                             </StackPanel>
                         </GroupBox>
                         <!--- opciones -->
-                        <GroupBox Grid.Column="1" Header=""  Background="Transparent" FontFamily="Champagne &amp; Limousines" FontSize="18" >
-                            <StackPanel Margin="10,10,10,10" VerticalAlignment="Top" >
+                        <GroupBox Grid.Column="1" Header="" Background="Transparent"
+                                  FontFamily="Champagne &amp; Limousines" FontSize="18"
+                                  IsEnabled="{Binding IsEnableArea}">
+                            <StackPanel Margin="10,10,10,10" VerticalAlignment="Top">
                                 <CheckBox x:Name="ChkLocked" Content="Locked"
-                                      FontFamily="Champagne &amp; Limousines" FontSize="18"
-                                      Foreground="Green"
-                                      Style="{StaticResource MaterialDesignCheckBox}"
-                                      Margin="10,5,10,0" />
+                                          FontFamily="Champagne &amp; Limousines" FontSize="18"
+                                          Foreground="Green"
+                                          IsChecked="{Binding ChkLockedIsChecked, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged }"
+                                          Style="{StaticResource MaterialDesignCheckBox}"
+                                          Margin="10,5,10,0" />
 
                                 <CheckBox x:Name="ChkDisable" Content="Disable"
-                                      FontFamily="Champagne &amp; Limousines" FontSize="18"
-                                      Foreground="Green"
-                                      Style="{StaticResource MaterialDesignCheckBox}"
-                                      Margin="10,5,10,0" />
+                                          FontFamily="Champagne &amp; Limousines" FontSize="18"
+                                          Foreground="Green"
+                                          IsChecked="{Binding ChkDisableIsChecked, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged }"
+                                          Style="{StaticResource MaterialDesignCheckBox}"
+                                          Margin="10,5,10,0" />
 
                                 <CheckBox x:Name="ChkForceChangePassword" Content="Force Change Password"
-                                      FontFamily="Champagne &amp; Limousines" FontSize="18"
-                                      Foreground="Green"
-                                      Style="{StaticResource MaterialDesignCheckBox}"
-                                      Margin="10,5,10,0" />
+                                          FontFamily="Champagne &amp; Limousines" FontSize="18"
+                                          Foreground="Green"
+                                          IsChecked="{Binding ChkForceChangePasswordIsChecked, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged }"
+                                          Style="{StaticResource MaterialDesignCheckBox}"
+                                          Margin="10,5,10,0" />
 
                                 <TextBlock Background="Transparent" Text="{Binding ErrorMessage}"
                                            Foreground="{DynamicResource MaterialDesignValidationErrorBrush}"
                                            TextAlignment="Left"
-                                           TextWrapping="Wrap" 
+                                           TextWrapping="Wrap"
                                            Margin="10,10,10,0" />
 
                                 <ItemsControl ItemsSource="{Binding ValidationErrors}" Background="White"
-                                              Visibility="{Binding ValidationErrors.Count, 
+                                              Visibility="{Binding ValidationErrors.Count,
                               Converter={StaticResource BooleanToVisibilityConverter}}"
                                               Margin="5,10,5,5"
                                               Padding="10"
@@ -207,11 +232,11 @@
                                               BorderThickness="1">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding}" 
-                                                       Foreground="{DynamicResource MaterialDesignValidationErrorBrush}" 
+                                            <TextBlock Text="{Binding}"
+                                                       Foreground="{DynamicResource MaterialDesignValidationErrorBrush}"
                                                        FontWeight="Medium"
-                                                       Margin="0,2" 
-                                                       TextWrapping="Wrap"/>
+                                                       Margin="0,2"
+                                                       TextWrapping="Wrap" />
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
@@ -221,81 +246,88 @@
                     </Grid>
                     <Grid Grid.Row="2" Background="Transparent">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
 
                         <!--Access Area  -->
-                        <GroupBox Grid.Column="0" Header="Access Area"  Background="Transparent" FontFamily="Champagne &amp; Limousines" FontSize="18" >
-                            <StackPanel  Margin="10,10,10,10" Background="Transparent" VerticalAlignment="Top" >
+                        <GroupBox Grid.Column="0" Header="Access Area" Background="Transparent"
+                                  FontFamily="Champagne &amp; Limousines" FontSize="18"
+                                  IsEnabled="{Binding IsEnableArea}">
+                            <StackPanel Margin="10,10,10,10" Background="Transparent" VerticalAlignment="Top">
                                 <CheckBox x:Name="ChkAll" Content="All"
-                                      FontFamily="Champagne &amp; Limousines" FontSize="18"
-                                      Foreground="Green"
-                                      Style="{StaticResource MaterialDesignCheckBox}"
-                                      Margin="10,5,10,0" />
+                                          FontFamily="Champagne &amp; Limousines" FontSize="18"
+                                          Foreground="Green"
+                                          IsChecked="{Binding ChkAllIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          Style="{StaticResource MaterialDesignCheckBox}"
+                                          Margin="10,5,10,0" />
 
                                 <CheckBox x:Name="ChkPassword" Content="Change Password"
-                                      FontFamily="Champagne &amp; Limousines" FontSize="18"
-                                      Foreground="Green"
-                                      Style="{StaticResource MaterialDesignCheckBox}"
-                                      Margin="10,5,10,0" />
+                                          FontFamily="Champagne &amp; Limousines" FontSize="18"
+                                          Foreground="Green"
+                                          IsChecked="{Binding ChkPasswordIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          Style="{StaticResource MaterialDesignCheckBox}"
+                                          Margin="10,5,10,0" />
 
                                 <CheckBox x:Name="ChkMaintenance" Content="Maintenance"
-                                      FontFamily="Champagne &amp; Limousines" FontSize="18"
-                                      Foreground="Green"
-                                      Style="{StaticResource MaterialDesignCheckBox}"
-                                      Margin="10,5,10,0" />
+                                          FontFamily="Champagne &amp; Limousines" FontSize="18"
+                                          Foreground="Green"
+                                          IsChecked="{Binding ChkMaintenanceIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          Style="{StaticResource MaterialDesignCheckBox}"
+                                          Margin="10,5,10,0" />
 
                                 <CheckBox x:Name="ChkReports" Content="Reports"
-                                      FontFamily="Champagne &amp; Limousines" FontSize="18"
-                                      Foreground="Green"
-                                      Style="{StaticResource MaterialDesignCheckBox}"
-                                      Margin="10,5,10,0" />
+                                          FontFamily="Champagne &amp; Limousines" FontSize="18"
+                                          Foreground="Green"
+                                          IsChecked="{Binding ChkReportsIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          Style="{StaticResource MaterialDesignCheckBox}"
+                                          Margin="10,5,10,0" />
 
                                 <CheckBox x:Name="ChkSetting" Content="Setting"
-                                      FontFamily="Champagne &amp; Limousines" FontSize="18"
-                                      Foreground="Green"
-                                      Style="{StaticResource MaterialDesignCheckBox}"
-                                      Margin="10,5,10,0" />
+                                          FontFamily="Champagne &amp; Limousines" FontSize="18"
+                                          Foreground="Green"
+                                          IsChecked="{Binding ChkSettingIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          Style="{StaticResource MaterialDesignCheckBox}"
+                                          Margin="10,5,10,0" />
 
                             </StackPanel>
                         </GroupBox>
 
                         <!-- Botones  -->
-                        <GroupBox Grid.Column="1" Header="Button Command"  Background="Transparent" FontFamily="Champagne &amp; Limousines" FontSize="18" >
+                        <GroupBox Grid.Column="1" Header="Button Command" Background="Transparent"
+                                  FontFamily="Champagne &amp; Limousines" FontSize="18">
                             <StackPanel Margin="10,0,10,10" Background="Transparent" VerticalAlignment="Top">
-                                <Button x:Name="BtnAdd" Content="Add"
-                                    Style="{StaticResource MaterialDesignRaisedButton}"
-                                    Margin="0,5,0,0"
-                                    />
+                                <Button x:Name="BtnAdd" Content="{DynamicResource AddUser}"
+                                        Command="{Binding AddUserCommand}"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        Margin="0,5,0,0" />
 
-                                <Button x:Name="BtnChangePassword" Content="Change Password"
-                                    Style="{StaticResource MaterialDesignRaisedButton}"
-                                    Margin="0,5,0,0"
-                            />
+                                <Button x:Name="BtnChangePassword" Content="{DynamicResource ChangePassword}"
+                                        Command="{Binding ChangePasswordCommand}"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        Margin="0,5,0,0" />
 
-                                <Button x:Name="BtnEdit" Content="Edit"
-                                    Style="{StaticResource MaterialDesignRaisedButton}"
-                                    Margin="0,5,0,0"
-                                    />
+                                <Button x:Name="BtnEdit" Content="{DynamicResource EditUser}"
+                                        Command="{Binding EditUserCommand}"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        Margin="0,5,0,0" />
 
-                                <Button x:Name="BtnDelete" Content="Delete"
-                                    Style="{StaticResource MaterialDesignRaisedButton}"
-                                    Margin="0,5,0,0"
-                                    />
+                                <Button x:Name="BtnDelete" Content="{DynamicResource DeleteUser}"
+                                        Command="{Binding DeleteUserCommand}"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        Margin="0,5,0,0" />
 
                                 <Button x:Name="BtnSave" Content="{DynamicResource Save}"
-                                Command="{Binding SaveCommand}"
-                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                    Style="{StaticResource MaterialDesignRaisedButton}"
-                                    Margin="0,5,0,0"
-                                    />
+                                        Command="{Binding SaveCommand}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        Margin="0,5,0,0" />
 
-                                <Button Command="{Binding LimpiarFormularioCommand}"
-                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                    Style="{StaticResource MaterialDesignRaisedButton}"
-                                    Margin="0,5,0,0"
-                                    Content="Cancel"/>
+                                <Button x:Name="BtnCancel" Content="{DynamicResource Cancel}"
+                                        Command="{Binding LimpiarFormularioCommand}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        Margin="0,5,0,0" />
 
                             </StackPanel>
                         </GroupBox>

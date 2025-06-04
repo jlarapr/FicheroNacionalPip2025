@@ -9,7 +9,7 @@
         <!--         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" /> -->
         <!--         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.Dark.xaml" /> -->
         <!-- Diccionario de idioma predeterminado -->
-        <ResourceDictionary Source="/FicheroNacionalPip.Presentation;component/Resources/Languages/Español.xaml" />
+        <ResourceDictionary Source="/FicheroNacionalPip.Presentation;component/Resources/Languages/English.xaml" />
 
         </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

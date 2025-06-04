@@ -28,7 +28,7 @@ public class UserDto
     /// <summary>
     /// Indica si el usuario debe cambiar su contraseña.
     /// </summary>
-    public bool ForceChangePassword { get; set; }
+    public bool? ForceChangePassword { get; set; }
 
     /// <summary>
     /// Contraseña del usuario (solo para creación o edición).
